@@ -1,0 +1,10 @@
+﻿Der Stab, der durch die Erde geht, repräsentiert die Rotationsachse der Erde
+bei der täglichen Drehung um sich selbst. Der obere Austrittspunkt entspricht
+dem Nordpol und der untere Austrittspunkt dem Südpol.
+
+Man beachte, daß die Rotationsachse nicht senkrecht auf der Ekliptik steht,
+sondern um einen Winkel von etwa 23° geneigt ist. Diese Achsneigung oder
+Achsenschiefstand ist der Grund für unsere Jahreszeiten.
+
+Der Winkel der Achsneigung wird auch ersichtlich im Winkel zwischen der
+Ekliptik und dem Erdäquator.

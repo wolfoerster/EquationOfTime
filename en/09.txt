@@ -1,0 +1,10 @@
+﻿Our location on earth is represented by a small sphere, which could be the 
+dome of an astronomical observatory. We can now identify the rotation of 
+the earth around itself by the movement of this location.
+
+The dome changes its color based on the time of day: in the night it is blue, 
+on sunrise it gets green, at noon it changes to yellow and on sunset it gets 
+blue again.
+
+We now come back to our first question: what is exactly a day? 
+The answer is: it depends ...

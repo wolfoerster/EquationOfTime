@@ -1,0 +1,10 @@
+﻿The stick which is going right through the earth represents the axis of the 
+earth's daily rotation around its own center. The upper exit point shows the
+north pole, while the lower exit point corresponds to the south pole.
+
+Note that the earth's rotation axis is not perpendicular to the plane of the 
+ecliptic but is tilted by about 23°. This axial tilt, which is called 'obliquity',
+is what causes our seasons.
+
+The angle of obliquity is also visible as the angle between the ecliptic and
+the earth's equator.

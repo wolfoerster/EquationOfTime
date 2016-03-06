@@ -1,0 +1,11 @@
+﻿Am 20. März geht die Sonne um 12:07:12 durch den Meridian, aber einen Tag
+später um 12:06:54, d.h. 18 Sekunden früher. Dieselbe Differenz erscheint auch
+in den nächsten Tagen, aber wenn wir etwas warten, sehen wir, daß der Wert
+langsam gegen Null geht. Wem das zu langsam geht, ändert einfach die Speed!
+
+Am 13. Mai ist die Differenz dann 0, was bedeutet, daß dies einer der seltenen
+Tage ist, die genau 24 Stunden lang sind. Die Tage vorher waren kürzer und die
+danach werden länger sein, was man am positiven Vorzeichen der Differenzen
+sieht.
+
+Und wie sieht es im Dezember aus?

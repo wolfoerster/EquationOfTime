@@ -1,0 +1,10 @@
+﻿Der Beobachtungsort auf unserer Erde wird durch eine kleine Kugel dargestellt, die
+die Kuppel eines Observatoriums sein könnte. Wir erkennen jetzt die Rotation der 
+Erde um sich selbst an der Bewegung des Standortes.
+
+Die Kuppel ändert ihre Farbe je nach Tageszeit: in der Nacht ist sie blau, bei Sonnen-
+aufgang wird sie grün, am Mittag wechselt sie zu gelb und wird bei Sonnenuntergang 
+wieder blau.
+
+Wir kommen nun auf unsere erste Frage zurück: was genau ist ein Tag?
+Die Antwort ist: das hängt davon ab ...

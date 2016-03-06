@@ -1,0 +1,13 @@
+﻿In der Tat gibt es mehrere Definitionen von "Tag", aber wenn wir es mit den Augen
+unserer Vorfahren betrachten, ist es die Zeit vom Mittag eines beliebigen Tages bis
+zum Mittag des nächsten Tages.
+
+Aber wann genau ist Mittag? Ist es um 12 Uhr am Tag?
+Die meisten Menschen würden das wohl meinen, aber der wahre Mittag kümmert sich
+nicht um Uhren sondern bedeutet die Zeit, an der die Sonne genau im Süden steht.
+
+Um diesen Moment zu identifizieren, müssen wir nur einen Kreis in den Himmel malen!
+Der Kreis beginnt genau im Süden, geht senkrecht nach oben und über unseren Köpfen
+hinweg nach Norden.
+
+Leider können wir keinen Kreis in den Himmel malen, aber der Computer kann es ...

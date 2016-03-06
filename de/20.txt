@@ -1,0 +1,9 @@
+﻿Weil die Kamera immer noch genau senkrecht auf den Nordpol gerichtet ist, 
+sehen wir die Achsneigung nicht direkt, aber die die Sonne scheint sich nun
+auf einer Ellipse zu bewegen. Tatsächlich läuft sie weiterhin auf einem perfekten
+Kreis, der jetzt aber um 60° in den Monitor gekippt ist. Mit einer 3D Brille würde
+man tatsächlich sehen, daß sich die Sonne vor und zurück bewegt.
+
+Das Entscheidende jetzt ist, daß es dem Meridian völlig egal ist, wie weit vorne
+oder hinten die Sonne steht! Das Einzige, was zählt, ist ihre projizierte Position
+auf dem Bildschirm ...

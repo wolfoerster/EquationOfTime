@@ -1,0 +1,9 @@
+﻿We start the journey at the begin of spring, i.e. on March 20.
+The sun is located at the center of our coordinate system and the earth
+is located somewhere at the negative y axis, the spring-autumn axis (green).
+
+The red x axis represents the winter-summer axis and the green disc in the 
+xy plane is intended to emphasise this plane, which is called 'ecliptic'. 
+The earth will never leave the ecliptic on its way around the sun.
+
+Now let's start the simulation ...

@@ -1,0 +1,17 @@
+﻿We can now explain what's going on with the times of sunrise and sunset in December: 
+
+The earth is coming near the winter solstice and though the sun rises later each day,
+the difference to the rise time the day before gets smaller. Similar the sun sets earlier
+every day, but again the difference to the day before gets smaller.
+
+On top of this behaviour there is a daily shift of all times of about 30 seconds towards
+the evenings, because the total length of a day in December is about 24 hours and 30 
+seconds.
+
+This shift pushes the rise times, even if they are slightly decreasing after the solstice,
+still in the evening direction. Until the difference is larger than 30 seconds!
+
+Likewise, when the decrease of set times falls below 30 seconds before the solstice, 
+the absolute set times start to increase again. It's getting dark later!
+
+But wait! Did I say 30 seconds? The table above is showing something different ...

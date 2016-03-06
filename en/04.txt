@@ -1,0 +1,7 @@
+﻿Before answering this question, let's take a look at the simulator 
+and watch the earth as it orbits the sun through the year. 
+
+For illustration purposes the scales of the sun and the earth and 
+the distance between them are not proportional. We wouldn't be 
+able to see anything but a tiny yellow pixel at the sun's location 
+if we would do so.

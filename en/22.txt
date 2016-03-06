@@ -1,0 +1,10 @@
+﻿Likewise if the apparant sun is faster as usual, the earth has to rotate a little bit
+more as usual for the meridian to catch it. That is why the days are longer than 24
+hours in summer and in winter.
+
+So the axial tilt causes our days to be sometimes shorter and sometimes longer
+than 24 hours. In fact there are only four days in a year, where it takes exactly 24
+hours from one noon to the next.
+
+But now let's come back to a more realistic world, where a year has 365.25 days 
+and the axial tilt has a value of 23.44° ...

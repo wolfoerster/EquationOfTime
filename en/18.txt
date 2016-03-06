@@ -1,0 +1,13 @@
+﻿We can now see another important fact: when the earth has finished a rotation 
+around itself, it also has moved a certain amount in its orbit around the sun.
+To reach the next noon position, it has to rotate further by the same degree
+that makes up this movement.
+
+So the length of time between two noons is the time it takes for the earth to
+turn around itself plus the time for the additional rotation to compensate the
+movement around the sun. While the first term is a real constant and always 
+has a value of 23 hours, 56 minutes and 4 seconds, it is the second term, the 
+additional rotation, which varies in the real world.
+
+We now move and attach our camera to the earth again, so it looks like the 
+earth is standing still and the sun moves around it ...

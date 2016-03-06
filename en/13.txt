@@ -1,0 +1,10 @@
+﻿This is how it looks like from outer space again. The meridian goes right 
+through the center of the sun. Now the big question is: 
+
+How long does it take until this happens again?
+
+The answer will be given in the table above. Besides the current simulation
+date and the times of sunrise, noon and sunset, it will show the difference 
+in seconds to the corresponding times of the day before.
+
+Let's start the simulation again ...

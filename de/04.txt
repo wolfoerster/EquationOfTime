@@ -1,0 +1,6 @@
+﻿Doch bevor wir diese Frage angehen, werfen wir einen Blick auf den Simulator
+und schauen der Erde zu, wie sie im Laufe eines Jahres um die Sonne kreist.
+
+Zur besseren Illustration sind Sonne, Erde und der Abstand zwischen ihnen
+nicht maßstabsgetreu skaliert. Hätten wir es getan, würde man nur ein kleines
+gelbes Pünktchen am Ort der Sonne sehen.

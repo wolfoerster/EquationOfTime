@@ -1,0 +1,7 @@
+﻿Es ist Mitternacht und man sieht nur etwas Blaues in der Mitte des Fensters.
+Es handelt sich dabei um die Meridianscheibe, so wie sie von hier aussieht.
+Der Meridian selber ist eine gedachte vertikale Linie genau in der Mitte.
+
+In einigen Sekunden wir die Sonne im Osten aufgehen, was wir aber nicht direkt
+sehen können, da wir nach Süden schauen. Die Simulation wird anhalten, wenn 
+die Sonne den Meridian kreuzt.

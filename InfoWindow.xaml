@@ -1,0 +1,21 @@
+﻿<Window x:Class="EquationOfTime.InfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:EquationOfTime"
+        Title="To finish the demo, close this window or press Escape. Click [Next] or press Enter to continue." 
+        SizeToContent="WidthAndHeight" ShowInTaskbar="False" WindowStyle="ToolWindow">
+  <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="28"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <local:StackPanelH Background="LightGray">
+        <Button Content="Prev" Click="OnButtonClick" Width="60" Margin="6,0,0,0"/>
+        <Button Content="Next" Click="OnButtonClick" Width="60" Margin="6,0,6,0"/>
+        <TextBlock x:Name="pageText" Width="60" Margin="6,0,6,0"/>
+        <Label Content="Speed"/>
+        <local:NumberBox Number="{Binding Speed}" Minimum="1" Maximum="20" TBMinWidth="25"/>
+      </local:StackPanelH>
+    <TextBox Grid.Row="1" x:Name="textBlock" FontSize="14" IsReadOnly="true"/>
+    </Grid>
+</Window>

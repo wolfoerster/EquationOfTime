@@ -1,0 +1,11 @@
+﻿An interesting side note
+
+The only light which strikes the earth comes from the sun and therefore
+always half of the earth is in darkness. Depending on the relative position
+of the earth to the sun (and to our camera) we can see more or less of the 
+illuminated half, which leads to the same effect that we know from our moon: 
+phases! This time earth phases and not lunar phases.
+
+But now let's move our camera straight upward so that we have a better view 
+down to the north pole. We will also replace the earth's equator by a latidude
+circle at 51°, which will be used in further calculations ...

@@ -1,0 +1,17 @@
+﻿Das war's! Ich hoffe, es hat euch gefallen.
+
+Wenn ihr mehr über die Zeitgleichung lesen wollt, schaut hier nach:
+https://de.wikipedia.org/wiki/Zeitgleichung -oder-
+http://www.kepler-gesellschaft.de/images/kepler-preis/pdf-dateien/zeitgleichung.pdf
+
+Wenn ihr die Berechnungen dieser Simulation überprüfen wollt, probiert
+https://www.calsky.com/
+
+Wählt 'Sonne' und dann 'Auf-Untergang'. Danach könnt ihr Parameter für die 
+Berechnung der Auf-, Untergangs- und Transitzeiten (Mittag) eingeben. 
+
+Um die Zahlen zu vergleichen, tragt als Breite 51° und als Länge 0° ein. Ihr werdet
+festellen, daß die Zahlen tatsächlich unterschiedlich sind! Besonders für Auf- und
+Untergang. Das liegt daran, daß diese Simulation ein eher einfaches Modell der Welt
+verwendet, das nicht alle Faktoren berücksichtigt, die Einfluss auf die Zeiten haben,
+wie z.B. die astronomische Refraktion.

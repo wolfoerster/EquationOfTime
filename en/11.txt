@@ -1,0 +1,13 @@
+﻿For a better illustration we have filled the imaginary circle with transparent 
+blue color and cut off the half of it which lies beyond the pole axis. Remember
+that the disc is perfectly aligned to the north and south direction.
+
+We can now identify the moment when the sun transits the south direction very 
+easily: it's when the disc moves right through the sun from right to left.
+
+For the observer on earth it is just the other way round: the disc is standing
+still and the sun moves through it from left to right. The name of this imaginary 
+disc is 'meridian' from the latin word meridies, which means midday and south.
+
+So let's move our camera down to earth and put it on top of the observatory 
+and look straight to the south ...

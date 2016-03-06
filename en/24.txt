@@ -1,0 +1,9 @@
+﻿There is no 30 seconds shift anymore but the maximum shift is 21 seconds!
+I'm sure it was 30 seconds when the demo started! 
+
+Believe it or not - by the time I was writing these lines I stumbled across this
+mismatch. But after taking a deep breath I realized that the earth right now is
+still orbiting the sun on a perfect circle. Which is not true in the real world.
+
+The circle is slightly deformed to an ellipse with an eccentricity of 0.0167,
+so let's take the last step and find out, why this changes the timing again ...

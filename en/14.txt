@@ -1,0 +1,10 @@
+﻿The time of noon on March 20 is 12:07:12 but a day later it is 12:06:54, 
+which is 18 seconds earlier. The same difference shows up for the next days 
+but if we wait a bit longer, we can see the value slowly moving towards zero.
+For those who cannot wait this long: you can change the speed!
+
+On May 13 the difference is zero, which means that this is one of the rare days, 
+which exactly lasts 24 hours. The days before were shorter and the days after will
+be longer as you can see from the differences which will be greater zero now.
+
+How does it look like in December?

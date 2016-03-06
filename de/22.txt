@@ -1,0 +1,10 @@
+﻿Umgekehrt, wenn die scheinbare Sonne schneller als normal ist, muss sich die Erde
+ein bißchen weiter drehen, damit der Meridian sie einholt. Deshalb dauern die Tage
+im Sommer und im Winter länger als normal.
+
+Die Achsneigung macht unsere Tage also manchmal kürzer und manchmal länger 
+als 24 Stunden. Und in der Tat gibt es nur 4 Tage im Jahr, an denen es genau 24
+Stunden von einem Mittag bis zum nächsten dauert.
+
+Jetzt kommen wir aber zu einer realistischeren Welt zurück, in der ein Jahr wieder
+365.25 Tage hat und wo die Achsneigung 23.44° beträgt ...

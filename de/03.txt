@@ -1,0 +1,14 @@
+﻿Der Grund für dieses merkwürdige Verhalten ist einfach, aber nicht einleuchtend:
+die Gesamtlänge eines Tages (von Mittag zu Mittag) ist nicht 24 Stunden, sondern
+schwankt im Laufe eines Jahres periodisch um diesen Wert.
+
+Im Dezember ist die Gesamtlänge 24 Stunden und ca. 30 Sekunden, womit unsere
+Uhren jeden Mittag eine halbe Minute später anzeigen. Um dieselben 30 Sekunden
+verzögern sich auch der Sonnenauf- und untergang.
+
+Wenn jeder Tag genau 24 Stunden lang wäre, gäbe es keine merkwürdigen Auf- und
+Untergangszeiten. Der kürzeste Tag wäre zugleich der Tag des spätesten Aufgangs
+und des frühesten Untergangs. Um zu verstehen, was hier los ist, müssen wir erst
+mal eine scheinbar dumme Frage klären:
+
+Was ist ein Tag?

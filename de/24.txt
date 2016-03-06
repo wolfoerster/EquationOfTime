@@ -1,0 +1,11 @@
+﻿Hier steht nichts mehr von 30 Sekunden, stattdessen sind es maximal 21 Sekunden!
+Ich bin mir sicher, daß es anfangs 30 Sekunden waren!
+
+Ob ihr's glaubt oder nicht - als ich diese Zeilen schrieb, stolperte ich über diese
+Unstimmigkeit. Aber nachdem ich einmal tief Luft geholt hatte, bemerkte ich, daß
+die Erde sich ja noch immer auf einem perfekten Kreis um die Sonne bewegt. 
+Und das ist eben nicht der Fall!
+
+Der Kreis ist ein bißchen zu einer Ellipse verformt, die eine Exzentrizität von
+0.0167 hat. Wir haben also noch einen Schritt zu tun, um herauszufinden, 
+warum das die Zeiten wiederum verändert ...

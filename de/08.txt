@@ -1,0 +1,12 @@
+﻿Aus dieser Perspektive erkennt man ein wichtiges Detail:
+die Rotationsachse der Erde ändert sich beim Umlauf um die Sonne nicht.
+Wie ein riesiger Kreisel dreht sich die Erde in immer derselben Weise um sich
+selbst (was nicht ganz stimmt, aber der Unterschied spielt hier keine Rolle).
+
+Als Resultat befindet sich der Nordpol (und ein kleiner Bereich darum) für ein
+halbes Jahr in Dunkelheit (links der y Achse, d.h. im Herbst und Winter),
+während er in der anderen Jahreshälfte (rechts der y Achse, d.h. im Frühling
+und im Sommer) immer beleuchtet ist!
+
+Wir verlangsamen jetzt die Simulation und sehen uns genauer an, was an
+unserem Beobachtungsort auf 51° Breite im Frühling passiert ...

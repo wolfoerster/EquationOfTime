@@ -1,0 +1,13 @@
+﻿In fact there are several definitions of "day" but if we see it with the eyes
+of our ancestors, a day is the time between two consecutive noons.
+
+So when exactly is noon? Is it at 12 o'clock in the daytime?
+Well, for most people it would mean that, but solar noon doesn't care
+about clocks and means the moment when the sun reaches exactly the
+south direction.
+
+To identify this moment we just have to draw a circle at the sky! 
+The circle starts at the horizon in the south position, goes straight up
+into the sky and right above our heads into the north direction. 
+
+For sure we cannot draw a circle at the sky, but the computer can do ...

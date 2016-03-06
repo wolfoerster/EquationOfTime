@@ -1,0 +1,9 @@
+﻿Since our camera ist still fixed to the polar axis of the earth, we do not see the
+axial tilt directly, but the sun seems to move on an ellipse now. In fact the sun
+is still moving on a perfect circle, but that circle is tilted about 60°, so the
+movement goes in and out of the screen. With 3D glasses you would really see 
+the sun moving away from you and coming back again.
+
+And now for the most important fact the meridian does not care about if the sun
+is behind the screen or in front of it! It only cares about the coordinates of the
+sun as it is projected onto the screen ...

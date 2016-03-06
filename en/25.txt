@@ -1,0 +1,11 @@
+﻿The difference of the earth's orbit to a circle would be hardly visible to the naked eye,
+but even if it is very small, it has a remarkable effect. The major axis of the ellipse is
+nearly the same as our x axis and on January 5 the earth is about 5 million kilometres
+nearer to the sun than on July 6, when it has reached its furthest point.
+
+Now if the distance gets shorter, the sun's gravitational pull on earth gets stronger.
+This leads to an increased speed of the earth in winter and a decreased speed in 
+summer.
+
+And what was true for the apparent motion of the sun, which helped to explain the
+shift in time caused by the axial tilt, is also true for the real motion of the earth ...

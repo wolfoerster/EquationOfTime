@@ -1,0 +1,13 @@
+﻿Der Unterschied zwischen der wahren Erdbahn und einem Kreis wäre mit bloßem Auge
+nicht zu erkennen, aber wenn er auch sehr klein ist, hat er doch einen merklichen
+Effekt. Die Hauptachse der Ellipse entspricht fast unserer x Achse und am 5. Januar ist
+die Erde der Sonne um ca. 5 Millionen Kilometer näher als am 6. Juli, wenn sie ihren 
+weitesten Punkt erreicht.
+
+Wenn nun aber die Entfernung geringer wird, vergößert sich die Anziehungskraft der
+Sonne auf die Erde. Das führt zu einer höheren Geschwindigkeit der Erde im Winter
+und zu einer geringeren Geschwindigkeit im Sommer.
+
+Und was für die scheinbare Bewegung der Sonne galt, mit der wir die Zeitverschiebung
+aufgrund der Achsneigung erklären konnten, gilt sicher auch für die reale Bewegung
+der Erde ...

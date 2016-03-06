@@ -1,0 +1,7 @@
+﻿It is midnight and all we see is something blue in the middle of the screen. 
+In fact this is the meridian disc as it looks from here and the meridian itself
+is an imaginary vertical line right in the middle of the scene.
+
+Wait a moment and soon the sun will rise in the east (which we cannot see
+directly because we are looking straight to the south). The simulation will
+stop once the sun crosses the meridian.

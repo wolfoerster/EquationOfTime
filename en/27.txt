@@ -1,0 +1,17 @@
+﻿That's it! I hope you enjoyed the show.
+
+If you want to read more about the Equation of Time, take look at these sites: 
+http://myweb.tiscali.co.uk/moonkmft/Articles/EquationOfTime.html -or-
+https://en.wikipedia.org/wiki/Equation_of_time
+
+If you want to verify the calculations of this simulation, go to
+https://www.calsky.com/ -or- http://aa.usno.navy.mil/data/index.php
+
+On the first site (after switching to English) select 'Sun', then 'Rise and Set'.
+You can then enter parameters for the calculation of rise, noon and set times.
+On the second site go directly to 'Table of Sunrise/Sunset' (no times for noon).
+
+To compare the numbers enter a latitude of 51° and a longitude of 0°. You will find 
+that the numbers indeed are different! Especially for rise and set times. That's because
+this simulation is using a rather simple model of the world and does not take into 
+account all effects that have an influence on these times, e.g. atmospheric refraction.

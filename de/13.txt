@@ -1,0 +1,10 @@
+﻿Und so sieht es wieder vom Weltraum gesehen aus. Der Meridian geht mitten
+durch das Zentrum der Sonne. Die entscheidende Frage ist jetzt:
+
+Wie lange dauert es, bis das wieder geschieht?
+
+Die Antwort wird in der obigen Tabelle erscheinen. Neben dem aktuellen Datum
+und den Zeiten für Sonnenaufgang, Mittag und Untergang werden die Differenzen
+in Sekunden zu den entsprechenden Zeiten des Vortages zu sehen sein.
+
+Die Simulation startet wieder beim nächsten Schritt ...

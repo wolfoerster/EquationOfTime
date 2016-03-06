@@ -1,0 +1,11 @@
+﻿From this perspective we can identify an important fact: 
+the earth's rotation axis does not change while it is orbiting the sun. Just like
+a giant spin top the earth keeps rotating around itself in always the same way
+(at least nearly, but the small difference does not matter here).
+
+As a result of this the north pole (and a certain region around it) is in darkness 
+for half a year (left of the y axis, i.e. autumn and winter), while in the other half
+(right of the y axis, i.e. in spring and summer) it is always lit!
+
+Now let's slow down the simulation speed and have a closer look to what is 
+happening at our location on earth at 51° in spring ...

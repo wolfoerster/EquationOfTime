@@ -1,0 +1,8 @@
+﻿In this 'perfect' world not only every day lasts exactly 24 hours, but also the times
+for sunrise and sunset are perfectly aligned to 6 o'clock in the morning and 6 
+o'clock in the evening. And these times will not change throughout the year!
+There are no seasons anymore! Not sure if that would be perfect for me :-)
+
+Let's modify our world a bit more, so it gets more clear what makes a day last as
+long as it takes. We will reduce the period of a year, which is 365 days plus some
+hours, to 36 days. So the earth orbits ten times faster around the sun ...

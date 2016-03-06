@@ -1,0 +1,9 @@
+﻿Wir beginnen die Reise bei Frühlingsanfang, d.h. am 20 März.
+Die Sonne befindet sich im Zentrum des Koordinatensystems und die Erde befindet
+sich an einem negativen Punkt der grünen y Achse, der Frühling-Herbst Achse.
+
+Die rote x Achse entspricht der Winter-Sommer Achse und die grüne Scheibe in der
+xy Ebene soll diese Ebene, auch Ekliptik genannt, hervorheben. Die Erde wird auf
+ihrem Weg um die Sonne diese Ebene nicht verlassen.
+
+Wir starten nun die Simulation ...

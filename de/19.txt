@@ -1,0 +1,13 @@
+﻿Aber diesmal befindet sich die Kamera nicht am Boden, sondern mehrere tausend
+Kilometer genau über dem Nordpol, von wo aus wir die Eigenrotation der Erde 
+und die sich scheinbar bewegende Sonne gut erkennen können.
+
+Weil unsere ideale Erde auf einem perfekten Kreis um die Sonne läuft, sieht es
+jetzt so aus, als würde die Sonne auf einem Kreis um die Erde laufen. Dabei bleibt
+ihre Geschwindigkeit immer gleich. Deshalb braucht die Erde immer dieselbe zusätz-
+liche Rotation, um zum nächsten Mittag zu gelangen. Dafür braucht sie 3 Minuten 
+und 56 Sekunden, was zusammen mit der Zeit für die Eigenrotation, die ja immer
+23 Stunden, 56 Minuten und 4 Sekunden beträgt, exakt 24 Stunden ergibt.
+
+Aber das ändert sich schlagartig, wenn wir die Achsneigung wieder hinzunehmen.
+Zur Verdeutlichung gehen wir auf 60° statt 23° und geben ein bißchen Gas ...

@@ -1,0 +1,13 @@
+﻿Nun sehen wir ein weiteres wichtiges Detail: wenn die Erde sich einmal um sich
+selbst gedreht hat, ist sie auch ein Stück auf ihrer Bahn um die Sonne gewandert.
+Um zur nächsten Mittagsposition zu kommen, muss sie sich um genau den Winkel
+weiterdrehen, den sie dabei zurückgelegt hat.
+
+Die Zeitspanne zwischen zwei Mittagsständen ist also die Zeit, die die Erde für
+eine Drehung um sich selber braucht, plus der Zeit, die sie für die zusätzliche
+Drehung aufgrund der Bewegung um die Sonne braucht. Während der erste Anteil 
+einen konstanten Wert von ca. 23 Stunden, 56 Minuten und 4 Sekunden hat, ist es
+der zweite Anteil, die zusätzliche Drehung, die variabel ist. 
+
+Wir richten unsere Kamera jetzt wieder an der Erde aus, so daß es so aussieht,
+als würde die Erde stillstehen und die Sonne sich um sie herum drehen ...

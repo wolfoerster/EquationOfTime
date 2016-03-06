@@ -1,0 +1,12 @@
+﻿If we were to correct each rise and set time by the corresponding difference of 
+noon, we would see that both latest rise and earliest set would happen on 
+December 21, the time of the winter solstice.
+
+So how long is a day? Obviously it is something about 24 hours, but sometimes 
+it's a few seconds more, and sometimes it's less. 
+
+Let's change the world a little bit and make each day last exactly 24 hours!
+All we have to do for this is to remove the axial tilt and let the earth orbit
+the sun on a perfect circle (which is only nearly true in reality).
+
+We will also move our camera to a new position ...

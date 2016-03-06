@@ -1,0 +1,13 @@
+﻿Der Deutlichkeit halber ist der Kreis mit transparenter blauer Farbe ausgefüllt
+und die Seite, die jenseits der Polachse liegt, ist abgeschnitten. Beachte, daß
+die entstandene Halbscheibe perfekt in Nord-Süd Richtung liegt.
+
+Nun können wir sehr leicht erkennen, wann die Sonne den Süden erreicht:
+immer dann, wenn die Scheibe die Sonne von rechts nach links durchquert.
+
+Für den Beobachter auf der Erde sieht es genau andersherum aus: die Scheibe
+steht still und wird von der Sonne von links nach rechts durchquert. Der Name
+dieser imaginären Scheibe ist 'Meridian', was Mittag und Süden bedeutet.
+
+Wir werden jetzt die Kamera runter auf die Erde bringen und auf der Kuppel
+unseres Observatoriums nach Süden ausrichten ...

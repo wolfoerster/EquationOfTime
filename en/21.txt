@@ -1,0 +1,12 @@
+﻿And these coordinates do not change much when the sun is apparantly above 
+or below the earth, whereas they do so to the left or to the right of the earth.
+
+Remember that the green axis is the spring-autumn axis, so if the sun is apparantly
+above the earth, it is spring, whereas it is autumn when the sun is below the earth.
+Likewise it is winter when the sun is to the right of the earth, and, yes, it is summer
+when the sun is left of it.
+
+So the velocity of the appearant sun changes throughout the year. In spring and
+in autumn it is slower than in summer or in winter. But if the sun is slower as
+usual, the meridian will catch it earlier as usual, so the time between two noons
+is shorter as usual ...

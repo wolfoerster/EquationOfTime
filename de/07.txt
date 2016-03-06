@@ -1,0 +1,11 @@
+﻿Eine Bemerkung am Rande
+
+Das einzige Licht, das auf die Erde fällt, kommt von der Sonne und deshalb befin-
+det sich eine Hälfte der Erde immer im Dunkeln. Abhängig von der relativen Lage
+von Sonne und Erde und unserer Kamera kann man mehr oder weniger von der
+beleuchteten Hälfte sehen, was zu einem Effekt führt, den wir vom Mond kennen:
+Phasen! Nur daß es hier Erdphasen sind und keine Mondphasen.
+
+Aber jetzt geht's mit der Kamera steil nach oben, so daß wir eine bessere Sicht auf
+den Norpol haben. Den Äquator ersetzen wir mit einem Breitenkreis bei 51°, da
+diese Breite bei den weiteren Berechnungen verwendet wird ...

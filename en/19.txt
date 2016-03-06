@@ -1,0 +1,13 @@
+﻿This time we did not attach the camera to the observatory at the ground, but
+several thousands of kilometres right above the north pole, so we can see the
+earth spinning around itself and the sun moving around the earth.
+
+Since our ideal earth is moving on a perfect circle around the sun, it now looks
+like the sun is moving on a perfect circle around the earth. And the velocity of
+the sun is always the same. Therefore it always takes the same additional amount
+for the earth to spin to the next noon. This is done in 3 minutes and 56 seconds,
+so when adding the time for a complete rotation, which is 23 hours, 56 minutes
+and 4 seconds, we exactly end up with 24 hours.
+
+But this will change drastically, when we restore the axial tilt. For a clearer
+illustration we will go for 60° instead of 23° and speed up the simulation ...

@@ -1,0 +1,14 @@
+﻿The reason for this strange behaviour is simple but not obvious:
+the total length of a day (from one noon to the next) is not 24 hours but varies 
+periodically about an average value of 24 hours during a year. 
+
+In December the total length is about 24 hours and 30 seconds, which means
+that our clocks will show half a minute later for each noon. And also sunrise 
+and sunset are delayed by the same 30 seconds. 
+
+If each day would last exactly 24 hours, we would not see the strange behaviour 
+of rise and set times. The shortest day would also be the day of latest sunrise 
+and earliest sunset. To understand what's going on here, we need to clarify a 
+seemingly dumb question: 
+
+What is a day?
