@@ -10,7 +10,7 @@ for your geographic location and it turned out that December 12 is the day of ea
 sunset, whereas December 30 is the day of latest sunrise.
 
 The reason for this is simple, but not obvious: the days in December are 30 seconds
-longer than 24 hours. This phenomenon is called 'Equation Of Time' and there are many
+longer than 24 hours! This phenomenon is called 'Equation Of Time' and there are many
 articles about it in the world wide web.
 
 Some of them are just math - which helps in a certain way, if you just want to do some
