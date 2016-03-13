@@ -53,26 +53,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="InfoWindow.xaml.cs">
+    <Compile Include="src\InfoWindow.xaml.cs">
       <DependentUpon>InfoWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LanguageDialog.xaml.cs">
+    <Compile Include="src\LanguageDialog.xaml.cs">
       <DependentUpon>LanguageDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SimulatorView.xaml.cs">
+    <Compile Include="src\SimulatorView.xaml.cs">
       <DependentUpon>SimulatorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Simulator.cs" />
-    <Compile Include="Utils.cs" />
-    <Page Include="InfoWindow.xaml">
+    <Compile Include="src\Simulator.cs" />
+    <Page Include="src\InfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LanguageDialog.xaml">
+    <Page Include="src\LanguageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SimulatorView.xaml">
+    <Page Include="src\SimulatorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
