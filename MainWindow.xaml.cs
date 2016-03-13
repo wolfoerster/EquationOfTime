@@ -17,6 +17,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.ComponentModel;
+using WFTools3D;
 
 namespace EquationOfTime
 {
@@ -39,10 +40,10 @@ namespace EquationOfTime
 			doMaximize = false;
 			WindowState = WindowState.Normal;
 
-			Screen screen = Utils.GetScreenByName(Properties.Settings.Default.ScreenName);
+			Screen screen = WFUtils.GetScreenByName(Properties.Settings.Default.ScreenName);
 			if (screen == null)
 			{
-				screen = Utils.GetPrimaryScreen();
+				screen = WFUtils.GetPrimaryScreen();
 				Top = screen.WorkArea.Top;
 				Left = screen.WorkArea.Left + 90;
 				Width = screen.WorkArea.Width - 250;
@@ -78,7 +79,7 @@ namespace EquationOfTime
 			Properties.Settings.Default.Width = Width;
 			Properties.Settings.Default.Height = Height;
 			Properties.Settings.Default.WindowState = (int)WindowState;
-			Properties.Settings.Default.ScreenName = Utils.GetScreenByPixel(Left, Top).Name;
+			Properties.Settings.Default.ScreenName = WFUtils.GetScreenByPixel(Left, Top).Name;
 			Properties.Settings.Default.Save();
 		}
 

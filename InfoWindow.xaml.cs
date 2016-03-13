@@ -20,6 +20,7 @@ using System.Windows.Controls;
 using System.ComponentModel;
 using System.Reflection;
 using System.Text;
+using WFTools3D;
 
 namespace EquationOfTime
 {
@@ -85,7 +86,7 @@ namespace EquationOfTime
 				Size size = textBlock.DesiredSize;
 				double width = size.Width + 17;
 				double height = size.Height + 63;
-				Screen screen = Utils.GetScreenByPixel(0, 0);
+				Screen screen = WFUtils.GetScreenByPixel(0, 0);
 				Left = screen.WorkArea.Right - width;
 				Top = (screen.WorkArea.Bottom - height) * 0.5;
 			}

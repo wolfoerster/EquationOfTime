@@ -24,7 +24,7 @@ using System.Windows.Controls.Primitives;
 using System.Diagnostics;
 using WFTools3D;
 
-namespace EquationOfTime
+namespace xEquationOfTime
 {
 	public static class Utils
 	{

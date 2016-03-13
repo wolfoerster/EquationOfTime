@@ -100,6 +100,11 @@ namespace EquationOfTime
 		public string Text;
 
 		/// <summary>
+		/// Performance counter.
+		/// </summary>
+		public long Count;
+
+		/// <summary>
 		/// A reference time used for date calculation.
 		/// </summary>
 		DateTime refTime = new DateTime(2013, 6, 21);
@@ -167,12 +172,11 @@ namespace EquationOfTime
 		void DoWork(object sender, DoWorkEventArgs e)
 		{
 			Text = "";
-			watch.Restart();
-			lastRise = lastNoon = lastSet = lastCheck = oldAngle = oldDist = count = 0;
+			lastRise = lastNoon = lastSet = lastCheck = oldAngle = oldDist = Count = 0;
 
 			while (true)
 			{
-				++count;
+				++Count;
 				time += dt;
 				Update();
 
@@ -193,9 +197,7 @@ namespace EquationOfTime
 				}
 			}
 		}
-		uint count;
 		double lastCheck;
-		Stopwatch watch = new Stopwatch();
 
 		public void Update()
 		{
@@ -364,14 +366,6 @@ namespace EquationOfTime
 			int s = (int)t;
 
 			return string.Format("{0:D2}:{1:D2}:{2:D2}", h, m, s);
-		}
-
-		public uint GetCalcRate()
-		{
-			if (watch.ElapsedMilliseconds < 1)
-				return 0;
-
-			return count / (uint)watch.ElapsedMilliseconds;
 		}
 
 		public void SetLocation(Object3D value)

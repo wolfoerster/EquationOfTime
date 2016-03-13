@@ -13,11 +13,11 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
-    <local:StackPanelH x:Name="controlPanel">
+    <wft3d:StackPanelH x:Name="controlPanel">
       <Label Content="Start day" Margin="0"/>
-      <local:NumberBox x:Name="dayBox" Number="{Binding StartDay}" Minimum="1" Maximum="31" TBMinWidth="25"/>
+      <wft3d:NumberBox x:Name="dayBox" Number="{Binding StartDay}" Minimum="1" Maximum="31" TBMinWidth="25"/>
       <Label Content="Month" Margin="0"/>
-      <local:NumberBox Number="{Binding StartMonth}" Minimum="1" Maximum="12" TBMinWidth="25"/>
+      <wft3d:NumberBox Number="{Binding StartMonth}" Minimum="1" Maximum="12" TBMinWidth="25"/>
       <Button x:Name="startButton" Content="Start" Click="OnButtonStart" Width="45" Margin="6,0,0,0"/>
       <Button Content="Noon" Click="OnButtonNoon" Width="45" Margin="6,0,0,0"/>
       <Button Content="Demo" Click="OnButtonDemo" Width="45" Margin="6,0,0,0"/>
@@ -39,11 +39,11 @@
         <ComboBoxItem Content="0.1"/>
       </ComboBox>
       <Label Content="Obliquity"/>
-      <local:NumberBox Number="{Binding Obliquity}" Minimum="0" Maximum="90" TBMinWidth="25"/>
+      <wft3d:NumberBox Number="{Binding Obliquity}" Minimum="0" Maximum="90" TBMinWidth="25"/>
       <Label Content="Latitude"/>
-      <local:NumberBox Number="{Binding Latitude}" Minimum="0" Maximum="90" TBMinWidth="25"/>
+      <wft3d:NumberBox Number="{Binding Latitude}" Minimum="0" Maximum="90" TBMinWidth="25"/>
       <Label Content="Speed"/>
-      <local:NumberBox Number="{Binding Speed}" Minimum="1" Maximum="20" TBMinWidth="25"/>
+      <wft3d:NumberBox Number="{Binding Speed}" Minimum="1" Maximum="20" TBMinWidth="25"/>
       <Button Content="Inv" Click="OnButtonInvert" Width="24"/>
       <Label Content="Axes"/>
       <CheckBox IsChecked="{Binding ShowAxes}"/>
@@ -57,7 +57,7 @@
       <CheckBox IsChecked="{Binding ShowMeridian}"/>
       <Label Content="Shadowborder"/>
       <CheckBox IsChecked="{Binding ShowShadowBorder}"/>
-    </local:StackPanelH>
+    </wft3d:StackPanelH>
     <Grid Grid.Row="1" FocusManager.FocusedElement="{Binding ElementName=scene}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>

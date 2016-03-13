@@ -524,13 +524,12 @@ namespace EquationOfTime
 			if (!simulator.IsBusy)
 				Stop();
 
-			string msg = checker.GetResult(true);
-
+			string msg = checker.GetResult(simulator.Count);
 			DateTime t1 = DateTime.Now;
-			if ((t1 - t0).TotalSeconds > 0.5)
+			if ((t1 - t0).TotalSeconds > 1)
 			{
 				t0 = t1;
-				mainWindow.Title = string.Format("EquationOfTime ({0}, {1} cpms)", msg, simulator.GetCalcRate());
+				mainWindow.Title = string.Format("EquationOfTime ({0})", msg);
 				if (textBox.Text.Length != simulator.Text.Length)
 				{
 					textBox.Text = simulator.Text;
