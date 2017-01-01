@@ -22,4 +22,4 @@ me to demystify this strange behaviour. You can use the application to just play
 with the sun-earth system, or you can take a demo tour which covers the physics of the
 Equation Of Time.
 
-<img src="https://googledrive.com/host/0B_1ZC4l0k6bJMkVCdmVBLTlSbGM/EquationOfTime.jpg" style="width:880px;">
+<img src="https://s28.postimg.org/dluyqy0ql/Equation_Of_Time.jpg" style="width:880px;">
