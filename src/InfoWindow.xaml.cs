@@ -21,6 +21,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 using WFTools3D;
+using System;
 
 namespace EquationOfTime
 {
@@ -45,7 +46,6 @@ namespace EquationOfTime
 		{
 			InitializeComponent();
 			subDir = language + "\\";
-			Left = 11111;
 		}
 		string subDir;
 
@@ -66,12 +66,14 @@ namespace EquationOfTime
 
 		bool ShowText(int index)
 		{
-			string dir = Path.GetDirectoryName(Assembly.GetCallingAssembly().FullName);
-			string name = dir + subDir + index.ToString("D2") + ".txt";
+			string dir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			string name = dir + "\\" + subDir + index.ToString("D2") + ".txt";
 			if (File.Exists(name))
 			{
+                bool firstTime = textBlock.Text.Length == 0;
 				textBlock.Text = File.ReadAllText(name, Encoding.Default);
-				UpdatePosition();
+                if (firstTime)
+				    UpdatePosition();
 				return true;
 			}
 			FirePropertyChanged("Finished");
@@ -80,16 +82,13 @@ namespace EquationOfTime
 
 		private void UpdatePosition()
 		{
-			if (Left == 11111)
-			{
-				textBlock.Measure(new Size(Left, Left));
-				Size size = textBlock.DesiredSize;
-				double width = size.Width + 17;
-				double height = size.Height + 63;
-				Screen screen = WFUtils.GetScreenByPixel(0, 0);
-				Left = screen.WorkArea.Right - width;
-				Top = (screen.WorkArea.Bottom - height) * 0.5;
-			}
+			textBlock.Measure(new Size(1234, 1234));
+			Size size = textBlock.DesiredSize;
+			double width = size.Width + 17;
+			double height = size.Height + 63;
+			Screen screen = WFUtils.GetScreenByPixel(0, 0);
+			Left = screen.WorkArea.Right - width;
+			Top = (screen.WorkArea.Bottom - height) * 0.5;
 		}
 
 		void OnButtonClick(object sender, RoutedEventArgs e)
@@ -97,5 +96,5 @@ namespace EquationOfTime
 			int i = ((sender as Button).Content as string).Equals("Prev") ? -1 : 1;
 			PageIndex += i;
 		}
-	}
+    }
 }

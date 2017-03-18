@@ -34,17 +34,17 @@ namespace EquationOfTime
 		/// <summary>
 		/// Between noon and sunset
 		/// </summary>
-		Afternoon, 
+		Afternoon,
 
 		/// <summary>
 		/// Between sunset and midnight
 		/// </summary>
-		ForeMidnight, 
+		ForeMidnight,
 
 		/// <summary>
 		/// Between midnight and sunrise
 		/// </summary>
-		AfterMidnight 
+		AfterMidnight
 	}
 
 	public class Simulator

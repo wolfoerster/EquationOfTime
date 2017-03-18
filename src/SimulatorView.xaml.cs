@@ -141,7 +141,7 @@ namespace EquationOfTime
 		void InitEarth()
 		{
 			earth = new Sphere(64);
-			earth.DiffuseMaterial.Brush = Brushes.White;
+			earth.DiffuseMaterial.Brush = (ImageBrush)Resources["earth"];
 			earth.SpecularMaterial.Brush = Brushes.Black;
 			scene.Models.Children.Add(earth);
 		}
@@ -588,6 +588,24 @@ namespace EquationOfTime
 			}
 		}
 
+		public bool ShowTexture
+		{
+			get { return showTexture; }
+			set
+			{
+				if (showTexture != value)
+				{
+					showTexture = value;
+					if (showTexture)
+						earth.DiffuseMaterial.Brush = (ImageBrush)Resources["earth"];
+					else
+						earth.DiffuseMaterial.Brush = Brushes.White;
+					FirePropertyChanged("ShowTexture");
+				}
+			}
+		}
+		bool showTexture = true;
+
 		public bool ShowAxes
 		{
 			get { return showAxes; }
@@ -856,6 +874,7 @@ namespace EquationOfTime
 					Speed = 16;
 					ViewMode = (int)ViewModes.FreeOverview2;
 					ShowAxes = true;
+					ShowTexture = false;
 					ShowEcliptic = true;
 					ShowMeridian = false;
 					ShowLocation = false;
@@ -879,6 +898,7 @@ namespace EquationOfTime
 					Speed = 8;
 					ViewMode = (int)ViewModes.FixOverview;
 					ShowAxes = true;
+					ShowTexture = true;
 					ShowEcliptic = true;
 					ShowMeridian = false;
 					ShowLocation = true;
