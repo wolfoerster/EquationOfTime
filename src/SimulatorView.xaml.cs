@@ -15,18 +15,18 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //******************************************************************************************
 using System;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Controls;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
-using System.ComponentModel;
 using WFTools3D;
 
 namespace EquationOfTime
 {
-	public enum ViewModes
+    public enum ViewModes
 	{
 		FixOverview, FixEclipitcPole, FixNorthPole, FixLocation, FixEarth, FreeLocation, FreeOverview2, FreeOverview3, Freeze
 	}
@@ -878,6 +878,7 @@ namespace EquationOfTime
 					ShowEcliptic = true;
 					ShowMeridian = false;
 					ShowLocation = false;
+                    ShowShadowBorder = false;
 					return;
 
 				case 6:
