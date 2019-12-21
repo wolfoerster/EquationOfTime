@@ -54,27 +54,75 @@ namespace EquationOfTime
 
 			StartDay = 5;
 			StartMonth = 12;
+            Speed = 16;
+            Obliquity = 0;
+            EccentricityIndex = 1;
+#if !false
+            sun.Radius = earth.Radius = 0.01;
+#endif
 
-			timer.Tick += TimerTick;
+            timer.Tick += TimerTick;
 			timer.Interval = TimeSpan.FromMilliseconds(30);
 			mainWindow = Application.Current.MainWindow;
 		}
 		Simulator simulator = new Simulator();
 		DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.Render);
 		Brush defBrush = new SolidColorBrush(Color.FromRgb(64, 64, 32));
-		Cylinder latitude, meridian, shadowBorder;
-		Sphere earth, location;
+		Cylinder latitude, meridian, shadowBorder, poleAxis;
+		Sphere sun, earth, location, northPole;
 		Disk horizon, xyPlane;
-		Object3D axes;
+		Object3D coordAxes;
 		Window mainWindow;
 
-		void InitScene()
-		{
-			//--- use scene.Lighting.DirectionalLight2 only:
-			scene.Lighting.LightingGroup.Children.Remove(scene.Lighting.AmbientLight);
-			scene.Lighting.LightingGroup.Children.Remove(scene.Lighting.DirectionalLight1);
+        private void Enlarge(bool mode)
+        {
+            double smax = 0.1;
+            double emax = mode ? 1 : smax;
+            if (earth.Radius < emax)
+            {
+                earth.Radius += 0.01;
+                sun.Radius = Math.Min(earth.Radius, smax);
+            }
+        }
 
-			scene.ActivateCamera(2);
+        private void SwitchLights()
+        {
+            if (scene.Lighting.LightingGroup.Children.Contains(scene.Lighting.DirectionalLight1))
+            {
+                scene.Lighting.LightingGroup.Children.Remove(scene.Lighting.DirectionalLight1);
+                earth.SpecularMaterial.Brush = Brushes.Black;
+                Ambiente = 36;
+            }
+            else
+            {
+                scene.Lighting.LightingGroup.Children.Add(scene.Lighting.DirectionalLight1);
+                earth.SpecularMaterial.Brush = Brushes.Gray;
+                Ambiente = 255;
+            }
+
+            InitEcliptic();
+        }
+
+        public int Ambiente
+        {
+            get => this.ambiente;
+
+            set
+            {
+                value = Math.Max(0, Math.Min(255, value));
+                if (this.ambiente != value)
+                {
+                    this.ambiente = value;
+                    var c = (byte)value;
+                    scene.Lighting.AmbientLight.Color = Color.FromRgb(c, c, c);
+                }
+            }
+        }
+        private int ambiente;
+
+        void InitScene()
+		{
+            scene.ActivateCamera(2);
 			scene.Camera.Position = new Point3D(-12, 2, 2);
 			scene.Camera.LookAtOrigin();
 
@@ -83,10 +131,10 @@ namespace EquationOfTime
 			scene.Camera.LookAtOrigin();
 
 			scene.ActivateCamera(0);
-			scene.Camera.FarPlaneDistance = 100;
+            scene.Camera.FarPlaneDistance = 100;
 			scene.Camera.NearPlaneDistance = 0.01;
 
-			InitAxes();
+			InitCoordAxes();
 			InitSun();
 			InitEarth();
 			InitLocation();
@@ -98,28 +146,31 @@ namespace EquationOfTime
 			InitMeridian();
 			InitShadowBorder();
 			InitEcliptic();
-		}
 
-		void InitAxes()
+            SwitchLights();
+            SwitchLights();
+        }
+
+        void InitCoordAxes()
 		{
-			if (axes != null)
+			if (coordAxes != null)
 			{
-				scene.Models.Children.Remove(axes);
-				axes = null;
+				scene.Models.Children.Remove(coordAxes);
+				coordAxes = null;
 			}
 
-			if (!showAxes)
+			if (!showCoordAxes)
 				return;
 
-			axes = new Object3D();
+			coordAxes = new Object3D();
 			double d = 30;
-			InitLine(d, 0, 0, Brushes.DarkRed);
-			InitLine(0, d, 0, Brushes.DarkGreen);
-			InitLine(0, 0, d, Brushes.Blue);
-			scene.Models.Children.Add(axes);
+			InitAxisLine(d, 0, 0, Brushes.DarkRed);
+			InitAxisLine(0, d, 0, Brushes.DarkGreen);
+			InitAxisLine(0, 0, d, Brushes.Blue);
+			scene.Models.Children.Add(coordAxes);
 		}
 
-		void InitLine(double x, double y, double z, Brush brush)
+		void InitAxisLine(double x, double y, double z, Brush brush)
 		{
 			Cylinder line = new Cylinder();
 			line.DiffuseMaterial.Brush = brush;
@@ -127,12 +178,12 @@ namespace EquationOfTime
 			line.Radius = 0.005;
 			line.From = new Point3D(-x, -y, -z);
 			line.To = new Point3D(x, y, z);
-			axes.Children.Add(line);
+			coordAxes.Children.Add(line);
 		}
 
 		void InitSun()
 		{
-			Sphere sun = new Sphere { Radius = 0.2 };
+			sun = new Sphere(16) { Radius = 0.1 };
 			sun.DiffuseMaterial.Brush = Brushes.Gold;
 			sun.EmissiveMaterial.Brush = Brushes.Gold;
 			scene.Models.Children.Add(sun);
@@ -141,12 +192,11 @@ namespace EquationOfTime
 		void InitEarth()
 		{
 			earth = new Sphere(64);
-			earth.DiffuseMaterial.Brush = (ImageBrush)Resources["earth"];
-			earth.SpecularMaterial.Brush = Brushes.Black;
+			earth.DiffuseMaterial.Brush = Brushes.CornflowerBlue;
 			scene.Models.Children.Add(earth);
-		}
+        }
 
-		void InitLocation()
+        void InitLocation()
 		{
 			if (location != null)
 			{
@@ -173,17 +223,35 @@ namespace EquationOfTime
 
 		void InitPoleAxis()
 		{
-			Cylinder axis = new Cylinder { Radius = 0.01, ScaleZ = 6.6 };
-			axis.Position = new Point3D(0, 0, -3.3);
-			axis.DiffuseMaterial.Brush = axis.EmissiveMaterial.Brush = defBrush;
-			earth.Children.Add(axis);
+            if (poleAxis != null)
+            {
+                earth.Children.Remove(poleAxis);
+                poleAxis = null;
+            }
+
+            if (!showPoleAxis)
+                return;
+
+            poleAxis = new Cylinder { Radius = 0.01, ScaleZ = 6.6 };
+            poleAxis.Position = new Point3D(0, 0, -3.3);
+            poleAxis.DiffuseMaterial.Brush = poleAxis.EmissiveMaterial.Brush = defBrush;
+			earth.Children.Add(poleAxis);
 		}
 
 		void InitNorthPole()
 		{
-			Sphere pole = new Sphere { Radius = 0.02 };
-			pole.Position = new Point3D(0, 0, 1);
-			earth.Children.Add(pole);
+            if (northPole != null)
+            {
+                earth.Children.Remove(northPole);
+                northPole = null;
+            }
+
+            if (!showPoleAxis)
+                return;
+
+            northPole = new Sphere { Radius = 0.02 };
+            northPole.Position = new Point3D(0, 0, 1);
+			earth.Children.Add(northPole);
 		}
 
 		void InitLatitude()
@@ -194,7 +262,10 @@ namespace EquationOfTime
 				latitude = null;
 			}
 
-			latitude = new Cylinder { IsClosed = true, Divisions = 64 };
+            if (!showLatitude)
+                return;
+
+            latitude = new Cylinder { IsClosed = true, Divisions = 64 };
 			double l = MathUtils.ToRadians(simulator.Latitude);
 			latitude.Position = new Point3D(0, 0, Math.Sin(l));
 			latitude.Radius = Math.Cos(l) * 1.003;
@@ -312,9 +383,11 @@ namespace EquationOfTime
 			if (!showEcliptic)
 				return;
 
-			xyPlane = new Disk(128) { Radius = 6 };
+            bool isLight = scene.Lighting.LightingGroup.Children.Contains(scene.Lighting.DirectionalLight1);
+
+            xyPlane = new Disk(128) { Radius = 6 };
 			Brush brush = Brushes.Green.Clone();
-			brush.Opacity = 0.12;
+			brush.Opacity = isLight ? 0.12 : 0.2;
 			xyPlane.DiffuseMaterial.Brush = brush;
 			xyPlane.EmissiveMaterial.Brush = brush;
 			xyPlane.SpecularMaterial.Brush = null;
@@ -358,7 +431,7 @@ namespace EquationOfTime
 			switch (viewMode)
 			{
 				case ViewModes.FixOverview:
-					scene.Camera.Position = new Point3D(0.5, -1, 12);
+					scene.Camera.Position = new Point3D(1, -2, 16);
 					scene.Camera.LookAtOrigin();
 					break;
 
@@ -473,8 +546,13 @@ namespace EquationOfTime
 			e.Handled = true;
 			switch (e.Key)
 			{
-				case Key.Return: OnButtonStart(null, null); return;
-			}
+				case Key.Space: OnButtonStart(null, null); return;
+                case Key.O: Ambiente--; return;
+                case Key.P: Ambiente++; return;
+                case Key.J: Enlarge(true); return;
+                case Key.K: Enlarge(false); return;
+                case Key.L: SwitchLights(); return;
+            }
 			e.Handled = false;
 		}
 
@@ -551,7 +629,7 @@ namespace EquationOfTime
 				Update();
 			}
 		}
-		ViewModes viewMode;
+		ViewModes viewMode = ViewModes.FixOverview;
 
 		public double Obliquity
 		{
@@ -599,29 +677,46 @@ namespace EquationOfTime
 					if (showTexture)
 						earth.DiffuseMaterial.Brush = (ImageBrush)Resources["earth"];
 					else
-						earth.DiffuseMaterial.Brush = Brushes.White;
+						earth.DiffuseMaterial.Brush = Brushes.CornflowerBlue;
+
 					FirePropertyChanged("ShowTexture");
 				}
 			}
 		}
-		bool showTexture = true;
+		bool showTexture;
 
-		public bool ShowAxes
-		{
-			get { return showAxes; }
+        public bool ShowCoordAxes
+        {
+			get { return showCoordAxes; }
 			set
 			{
-				if (showAxes != value)
+				if (showCoordAxes != value)
 				{
-					showAxes = value;
-					InitAxes();
-					FirePropertyChanged("ShowAxes");
+					showCoordAxes = value;
+					InitCoordAxes();
+					FirePropertyChanged("ShowCoordAxes");
 				}
 			}
 		}
-		bool showAxes = true;
+		bool showCoordAxes;
 
-		public bool ShowLocation
+        public bool ShowPoleAxis
+        {
+            get { return showPoleAxis; }
+            set
+            {
+                if (showPoleAxis != value)
+                {
+                    showPoleAxis = value;
+                    InitPoleAxis();
+                    InitNorthPole();
+                    FirePropertyChanged("ShowPoleAxis");
+                }
+            }
+        }
+        bool showPoleAxis;
+
+        public bool ShowLocation
 		{
 			get { return showLocation; }
 			set
@@ -634,7 +729,7 @@ namespace EquationOfTime
 				}
 			}
 		}
-		bool showLocation = true;
+		bool showLocation;
 
 		public bool ShowMeridian
 		{
@@ -666,22 +761,37 @@ namespace EquationOfTime
 		}
 		bool showEcliptic;
 
-		public bool ShowHorizon
-		{
-			get { return showHorizon; }
-			set
-			{
-				if (showHorizon != value)
-				{
-					showHorizon = value;
-					InitHorizon();
-					FirePropertyChanged("ShowHorizon");
-				}
-			}
-		}
-		bool showHorizon;
+        public bool ShowHorizon
+        {
+            get { return showHorizon; }
+            set
+            {
+                if (showHorizon != value)
+                {
+                    showHorizon = value;
+                    InitHorizon();
+                    FirePropertyChanged("ShowHorizon");
+                }
+            }
+        }
+        bool showHorizon;
 
-		public bool ShowShadowBorder
+        public bool ShowLatitude
+        {
+            get { return showLatitude; }
+            set
+            {
+                if (showLatitude != value)
+                {
+                    showLatitude = value;
+                    InitLatitude();
+                    FirePropertyChanged("ShowLatitude");
+                }
+            }
+        }
+        bool showLatitude;
+
+        public bool ShowShadowBorder
 		{
 			get { return showShadowBorder; }
 			set
@@ -792,7 +902,7 @@ namespace EquationOfTime
 		}
 		int eccentricityIndex;
 
-		#region Demo Mode
+#region Demo Mode
 
 		void OnButtonDemo(object sender, RoutedEventArgs e)
 		{
@@ -873,7 +983,7 @@ namespace EquationOfTime
 					StartMonth = 3;
 					Speed = 16;
 					ViewMode = (int)ViewModes.FreeOverview2;
-					ShowAxes = true;
+					ShowCoordAxes = true;
 					ShowTexture = false;
 					ShowEcliptic = true;
 					ShowMeridian = false;
@@ -898,7 +1008,7 @@ namespace EquationOfTime
 					StartMonth = 3;
 					Speed = 8;
 					ViewMode = (int)ViewModes.FixOverview;
-					ShowAxes = true;
+                    ShowCoordAxes = true;
 					ShowTexture = true;
 					ShowEcliptic = true;
 					ShowMeridian = false;
@@ -920,7 +1030,7 @@ namespace EquationOfTime
 					StartMonth = 3;
 					Speed = 6;
 					ViewMode = (int)ViewModes.FreeLocation;
-					ShowAxes = false;
+                    ShowCoordAxes = false;
 					ShowEcliptic = false;
 					ShowMeridian = true;
 					ShowLocation = true;
@@ -929,7 +1039,7 @@ namespace EquationOfTime
 
 				case 13:
 					Stop();
-					ShowAxes = true;
+                    ShowCoordAxes = true;
 					ViewMode = (int)ViewModes.FixOverview;
 					return;
 
@@ -938,7 +1048,7 @@ namespace EquationOfTime
 					StartDay = 20;
 					StartMonth = 3;
 					ViewMode = (int)ViewModes.FixOverview;
-					ShowAxes = true;
+                    ShowCoordAxes = true;
 					ShowEcliptic = false;
 					ShowMeridian = true;
 					ShowLocation = true;
@@ -967,7 +1077,7 @@ namespace EquationOfTime
 					scene.Camera.Position = new Point3D(0, 0, 12);
 					scene.Camera.LookAtOrigin();
 					scene.Camera.UpDirection = Math3D.UnitY;
-					ShowAxes = true;
+                    ShowCoordAxes = true;
 					ShowEcliptic = false;
 					ShowMeridian = true;
 					ShowLocation = true;
@@ -1041,6 +1151,6 @@ namespace EquationOfTime
 			}
 		}
 
-		#endregion Demo Mode
+#endregion Demo Mode
 	}
 }

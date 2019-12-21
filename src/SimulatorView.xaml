@@ -48,12 +48,16 @@
       <Label Content="Speed"/>
       <wft3d:NumberBox Number="{Binding Speed}" Minimum="1" Maximum="20" TBMinWidth="25"/>
       <Button Content="Inv" Click="OnButtonInvert" Width="24"/>
-      <Label Content="Texture"/>
-      <CheckBox IsChecked="{Binding ShowTexture}"/>
-      <Label Content="Axes"/>
-      <CheckBox IsChecked="{Binding ShowAxes}"/>
+      <Label Content="Coord. Axes"/>
+      <CheckBox IsChecked="{Binding ShowCoordAxes}"/>
       <Label Content="Ecliptic"/>
       <CheckBox IsChecked="{Binding ShowEcliptic}"/>
+      <Label Content="Texture"/>
+      <CheckBox IsChecked="{Binding ShowTexture}"/>
+      <Label Content="Pole Axis"/>
+      <CheckBox IsChecked="{Binding ShowPoleAxis}"/>
+      <Label Content="Latitude"/>
+      <CheckBox IsChecked="{Binding ShowLatitude}"/>
       <Label Content="Location"/>
       <CheckBox IsChecked="{Binding ShowLocation}"/>
       <Label Content="Horizon"/>
@@ -66,7 +70,8 @@
     <Grid Grid.Row="1" FocusManager.FocusedElement="{Binding ElementName=scene}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="400"/>
+        <!--<ColumnDefinition Width="400"/>-->
+        <ColumnDefinition Width="0"/>
       </Grid.ColumnDefinitions>
       <wft3d:Scene3D x:Name="scene"/>
       <TextBox x:Name="textBox" Grid.Column="1" VerticalScrollBarVisibility="Visible" IsReadOnly="true" FontFamily="Consolas" FontSize="13"/>
