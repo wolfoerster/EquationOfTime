@@ -163,25 +163,31 @@ namespace EquationOfTime
 				return;
 
 			coordAxes = new Object3D();
-			double d = 30;
-			InitAxisLine(d, 0, 0, Brushes.DarkRed);
-			InitAxisLine(0, d, 0, Brushes.DarkGreen);
-			InitAxisLine(0, 0, d, Brushes.Blue);
+			InitAxis(Math3D.UnitX, Brushes.DarkRed);
+			InitAxis(Math3D.UnitY, Brushes.DarkGreen);
+			InitAxis(Math3D.UnitZ, Brushes.Blue);
 			scene.Models.Children.Add(coordAxes);
 		}
 
-		void InitAxisLine(double x, double y, double z, Brush brush)
-		{
-			Cylinder line = new Cylinder();
-			line.DiffuseMaterial.Brush = brush;
-			line.EmissiveMaterial.Brush = brush;
-			line.Radius = 0.005;
-			line.From = new Point3D(-x, -y, -z);
-			line.To = new Point3D(x, y, z);
-			coordAxes.Children.Add(line);
-		}
+        void InitAxis(Vector3D v, Brush brush)
+        {
+            CreateLine(v, brush, true);
+            CreateLine(v, brush, false);
+        }
 
-		void InitSun()
+        void CreateLine(Vector3D v, Brush brush, bool mode)
+        {
+            v *= mode ? 30 : 0.4;
+            Cylinder line = new Cylinder();
+            line.DiffuseMaterial.Brush = brush;
+            line.EmissiveMaterial.Brush = brush;
+            line.Radius = mode ? 0.005 : 0.01;
+            line.From = mode ? (Point3D)(-v) : new Point3D(0, 0, 0);
+            line.To = (Point3D)v;
+            coordAxes.Children.Add(line);
+        }
+
+        void InitSun()
 		{
 			sun = new Sphere(16) { Radius = 0.1 };
 			sun.DiffuseMaterial.Brush = Brushes.Gold;
@@ -387,7 +393,7 @@ namespace EquationOfTime
 
             xyPlane = new Disk(128) { Radius = 6 };
 			Brush brush = Brushes.Green.Clone();
-			brush.Opacity = isLight ? 0.12 : 0.2;
+			brush.Opacity = isLight ? 0.06 : 0.12;
 			xyPlane.DiffuseMaterial.Brush = brush;
 			xyPlane.EmissiveMaterial.Brush = brush;
 			xyPlane.SpecularMaterial.Brush = null;
@@ -626,7 +632,7 @@ namespace EquationOfTime
 			{
 				viewMode = (ViewModes)value;
 				azimuth = 0;
-                altitude = 5; // 10;
+                altitude = 6;
 				FirePropertyChanged("ViewMode");
 				Update();
 			}
