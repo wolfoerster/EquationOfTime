@@ -57,7 +57,7 @@ namespace EquationOfTime
             Speed = 16;
             Obliquity = 0;
             EccentricityIndex = 1;
-#if !false
+#if false
             sun.Radius = earth.Radius = 0.01;
 #endif
 
@@ -91,7 +91,7 @@ namespace EquationOfTime
             {
                 scene.Lighting.LightingGroup.Children.Remove(scene.Lighting.DirectionalLight1);
                 earth.SpecularMaterial.Brush = Brushes.Black;
-                Ambiente = 36;
+                Ambiente = 12;
             }
             else
             {
@@ -127,7 +127,7 @@ namespace EquationOfTime
 			scene.Camera.LookAtOrigin();
 
 			scene.ActivateCamera(1);
-			scene.Camera.Position = new Point3D(8, -12, 2);
+			scene.Camera.Position = new Point3D(9, -13, 3);
 			scene.Camera.LookAtOrigin();
 
 			scene.ActivateCamera(0);
@@ -547,6 +547,8 @@ namespace EquationOfTime
 			switch (e.Key)
 			{
 				case Key.Space: OnButtonStart(null, null); return;
+                case Key.Add: Speed += 10; return;
+                case Key.Subtract: Speed -= 10; return;
                 case Key.O: Ambiente--; return;
                 case Key.P: Ambiente++; return;
                 case Key.J: Enlarge(true); return;
@@ -624,7 +626,7 @@ namespace EquationOfTime
 			{
 				viewMode = (ViewModes)value;
 				azimuth = 0;
-				altitude = 10;
+                altitude = 5; // 10;
 				FirePropertyChanged("ViewMode");
 				Update();
 			}
