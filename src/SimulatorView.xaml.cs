@@ -92,7 +92,7 @@ namespace EquationOfTime
             {
                 scene.Lighting.LightingGroup.Children.Remove(scene.Lighting.DirectionalLight1);
                 earth.SpecularMaterial.Brush = Brushes.Black;
-                Ambiente = 12;
+                Ambiente = 8;
             }
             else
             {
@@ -598,6 +598,7 @@ namespace EquationOfTime
 			{
 				case Key.Space: OnButtonStart(null, null); return;
                 case Key.Multiply: Speed *= 2; return;
+                case Key.NumPad6: Speed = 6; return;
                 case Key.NumPad8: Speed = 8; return;
                 case Key.Divide: Speed /= 2; return;
                 case Key.Add: Speed += 1; return;
