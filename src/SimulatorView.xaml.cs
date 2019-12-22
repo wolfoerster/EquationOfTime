@@ -57,7 +57,8 @@ namespace EquationOfTime
             Speed = 16;
             Obliquity = 0;
             EccentricityIndex = 1;
-#if false
+            //ViewMode = 6;
+#if !false
             sun.Radius = earth.Radius = 0.01;
 #endif
 
@@ -149,6 +150,49 @@ namespace EquationOfTime
 
             SwitchLights();
             SwitchLights();
+            //InitSigns();
+        }
+
+        private void InitSigns()
+        {
+            var square = CreateSign("Frühling");
+            square.Position = new Point3D(0, 5, 0.1);
+            square.Rotation2 = new Quaternion(Math3D.UnitZ, 90);
+
+            square = CreateSign("Sommer");
+            square.Position = new Point3D(5, 0, 0.1);
+
+            square = CreateSign("Herbst");
+            square.Position = new Point3D(0, -5, 0.1);
+            square.Rotation2 = new Quaternion(Math3D.UnitZ, 90);
+
+            square = CreateSign("Winter");
+            square.Position = new Point3D(-5, 0, 0.1);
+        }
+
+        private Square CreateSign(string text)
+        {
+            var square = new Square
+            {
+                ScaleX = 0.5,
+                ScaleY = 0.1,
+                Rotation1 = new Quaternion(Math3D.UnitX, 90),
+            };
+
+            square.DiffuseMaterial = null;
+            square.SpecularMaterial = null;
+
+            TextBlock tb = new TextBlock
+            {
+                Text = text,
+                Foreground = Brushes.Yellow,
+                Background = Brushes.Transparent,
+                FontFamily = new FontFamily("Algerian"),
+            };
+            square.EmissiveMaterial.Brush = new VisualBrush(tb);
+
+            scene.Models.Children.Add(square);
+            return square;
         }
 
         void InitCoordAxes()
@@ -181,7 +225,7 @@ namespace EquationOfTime
             Cylinder line = new Cylinder();
             line.DiffuseMaterial.Brush = brush;
             line.EmissiveMaterial.Brush = brush;
-            line.Radius = mode ? 0.005 : 0.01;
+            line.Radius = mode ? 0.005 : 0.012;
             line.From = mode ? (Point3D)(-v) : new Point3D(0, 0, 0);
             line.To = (Point3D)v;
             coordAxes.Children.Add(line);
@@ -271,7 +315,7 @@ namespace EquationOfTime
             if (!showLatitude)
                 return;
 
-            latitude = new Cylinder { IsClosed = true, Divisions = 64 };
+            latitude = new Cylinder { IsClosed = true, Divisions = 128 };
 			double l = MathUtils.ToRadians(simulator.Latitude);
 			latitude.Position = new Point3D(0, 0, Math.Sin(l));
 			latitude.Radius = Math.Cos(l) * 1.003;
@@ -537,7 +581,7 @@ namespace EquationOfTime
 			Vector diff = (mousePosition - oldPosition) * 0.15;
 			oldPosition = mousePosition;
 
-			azimuth += diff.X;
+			azimuth -= diff.X;
 			altitude += diff.Y;
 
 			if (!simulator.IsBusy)
@@ -553,15 +597,19 @@ namespace EquationOfTime
 			switch (e.Key)
 			{
 				case Key.Space: OnButtonStart(null, null); return;
-                case Key.Add: Speed += 10; return;
-                case Key.Subtract: Speed -= 10; return;
+                case Key.Multiply: Speed *= 2; return;
+                case Key.NumPad8: Speed = 8; return;
+                case Key.Divide: Speed /= 2; return;
+                case Key.Add: Speed += 1; return;
+                case Key.Subtract: Speed -= 1; return;
                 case Key.O: Ambiente--; return;
                 case Key.P: Ambiente++; return;
                 case Key.J: Enlarge(true); return;
                 case Key.K: Enlarge(false); return;
                 case Key.L: SwitchLights(); return;
+                case Key.I: InitSigns(); return;
             }
-			e.Handled = false;
+            e.Handled = false;
 		}
 
 		void OnButtonInvert(object sender, RoutedEventArgs e)
@@ -670,6 +718,7 @@ namespace EquationOfTime
 					ValueChanged("Latitude");
 					InitLocation();
 					InitLatitude();
+                    InitHorizon();
 				}
 			}
 		}
@@ -816,11 +865,11 @@ namespace EquationOfTime
 		bool showShadowBorder;
 
 		public int Speed
-		{
-			get { return speed; }
-			set
-			{
-				if (speed != value)
+        {
+            get { return speed; }
+            set
+            {
+				if (speed != value && value >= 1 && value <= 20)
 				{
 					speed = value;
 					simulator.SetSpeed(speed - 10);
