@@ -57,7 +57,7 @@ namespace EquationOfTime
             Speed = 16;
             Obliquity = 0;
             EccentricityIndex = 1;
-#if false
+#if !false
             sun.Radius = earth.Radius = 0.01;
 #else
             ViewMode = 6;
@@ -137,9 +137,9 @@ namespace EquationOfTime
                 return;
 
             labels = new Object3D();
-            CreateLabel("Frühling, 20. März", 0, 5);
+            CreateLabel("Frühling, 20. März", 0, -5);
             CreateLabel("Sommer, 21. Juni", 5, 0);
-            CreateLabel("Herbst, 23. Sept", 0, -5);
+            CreateLabel("Herbst, 23. Sept", 0, 5);
             CreateLabel("Winter, 21. Dez", -5, 0);
             scene.Models.Children.Add(labels);
         }
@@ -148,7 +148,6 @@ namespace EquationOfTime
         {
             var square = new Square
             {
-                ScaleX = 0.9,
                 ScaleY = 0.1,
                 Position = new Point3D(x, y, 0.08),
                 Rotation1 = new Quaternion(Math3D.UnitX, 90),
@@ -167,18 +166,21 @@ namespace EquationOfTime
                 FontFamily = new FontFamily("Algerian"),
             };
 
+            tb.Measure(new Size(4444, 4444));
+            double ratio = tb.DesiredSize.Width / tb.DesiredSize.Height;
+            square.ScaleX = square.ScaleY * ratio;
+
             var brush1 = new VisualBrush(tb);
             square.Material = new MaterialGroup();
             square.Material.Children.Add(new EmissiveMaterial(brush1));
 
-            var brush2 = new VisualBrush(tb);
-            square.BackMaterial = new MaterialGroup();
-            square.BackMaterial.Children.Add(new EmissiveMaterial(brush2));
-
             var transform = new TransformGroup();
             transform.Children.Add(new ScaleTransform(-1, 1));
             transform.Children.Add(new TranslateTransform(1, 0));
-            brush2.RelativeTransform = transform;
+
+            var brush2 = new VisualBrush(tb) { RelativeTransform = transform };
+            square.BackMaterial = new MaterialGroup();
+            square.BackMaterial.Children.Add(new EmissiveMaterial(brush2));
 
             labels.Children.Add(square);
             return square;
@@ -210,8 +212,7 @@ namespace EquationOfTime
 
         void CreateLine(Vector3D v, Brush brush, bool mode)
         {
-            //v *= mode ? 30 : 0.4;
-            v *= mode ? 12 : 0.4;
+            v *= mode ? 20 : 0.4;
             Cylinder line = new Cylinder();
             line.DiffuseMaterial.Brush = brush;
             line.EmissiveMaterial.Brush = brush;
@@ -427,7 +428,7 @@ namespace EquationOfTime
 
             xyPlane = new Disk(128) { Radius = 6 };
 			Brush brush = Brushes.Green.Clone();
-			brush.Opacity = isLight ? 0.06 : 0.12;
+			brush.Opacity = isLight ? 0.1 : 0.2;
 			xyPlane.DiffuseMaterial.Brush = brush;
 			xyPlane.EmissiveMaterial.Brush = brush;
 			xyPlane.SpecularMaterial.Brush = null;
