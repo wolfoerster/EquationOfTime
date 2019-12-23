@@ -57,9 +57,13 @@ namespace EquationOfTime
             Speed = 16;
             Obliquity = 0;
             EccentricityIndex = 1;
-            //ViewMode = 6;
-#if !false
+#if false
             sun.Radius = earth.Radius = 0.01;
+#else
+            ViewMode = 6;
+            SwitchLights();
+            ShowCoordAxes = true;
+            ShowLabels = true;
 #endif
 
             timer.Tick += TimerTick;
@@ -72,54 +76,8 @@ namespace EquationOfTime
 		Cylinder latitude, meridian, shadowBorder, poleAxis;
 		Sphere sun, earth, location, northPole;
 		Disk horizon, xyPlane;
-		Object3D coordAxes;
+		Object3D coordAxes, labels;
 		Window mainWindow;
-
-        private void Enlarge(bool mode)
-        {
-            double smax = 0.1;
-            double emax = mode ? 1 : smax;
-            if (earth.Radius < emax)
-            {
-                earth.Radius += 0.01;
-                sun.Radius = Math.Min(earth.Radius, smax);
-            }
-        }
-
-        private void SwitchLights()
-        {
-            if (scene.Lighting.LightingGroup.Children.Contains(scene.Lighting.DirectionalLight1))
-            {
-                scene.Lighting.LightingGroup.Children.Remove(scene.Lighting.DirectionalLight1);
-                earth.SpecularMaterial.Brush = Brushes.Black;
-                Ambiente = 8;
-            }
-            else
-            {
-                scene.Lighting.LightingGroup.Children.Add(scene.Lighting.DirectionalLight1);
-                earth.SpecularMaterial.Brush = Brushes.Gray;
-                Ambiente = 255;
-            }
-
-            InitEcliptic();
-        }
-
-        public int Ambiente
-        {
-            get => this.ambiente;
-
-            set
-            {
-                value = Math.Max(0, Math.Min(255, value));
-                if (this.ambiente != value)
-                {
-                    this.ambiente = value;
-                    var c = (byte)value;
-                    scene.Lighting.AmbientLight.Color = Color.FromRgb(c, c, c);
-                }
-            }
-        }
-        private int ambiente;
 
         void InitScene()
 		{
@@ -150,37 +108,56 @@ namespace EquationOfTime
 
             SwitchLights();
             SwitchLights();
-            //InitSigns();
         }
 
-        private void InitSigns()
+        public bool ShowLabels
         {
-            var square = CreateSign("Frühling");
-            square.Position = new Point3D(0, 5, 0.1);
-            square.Rotation2 = new Quaternion(Math3D.UnitZ, 90);
+            get { return showLabels; }
+            set
+            {
+                if (showLabels != value)
+                {
+                    showLabels = value;
+                    FirePropertyChanged("ShowLabels");
+                    InitLabels();
+                }
+            }
+        }
+        private bool showLabels;
 
-            square = CreateSign("Sommer");
-            square.Position = new Point3D(5, 0, 0.1);
+        private void InitLabels()
+        {
+            if (labels != null)
+            {
+                scene.Models.Children.Remove(labels);
+                labels = null;
+            }
 
-            square = CreateSign("Herbst");
-            square.Position = new Point3D(0, -5, 0.1);
-            square.Rotation2 = new Quaternion(Math3D.UnitZ, 90);
+            if (!showLabels)
+                return;
 
-            square = CreateSign("Winter");
-            square.Position = new Point3D(-5, 0, 0.1);
+            labels = new Object3D();
+            CreateLabel("Frühling, 20. März", 0, 5);
+            CreateLabel("Sommer, 21. Juni", 5, 0);
+            CreateLabel("Herbst, 23. Sept", 0, -5);
+            CreateLabel("Winter, 21. Dez", -5, 0);
+            scene.Models.Children.Add(labels);
         }
 
-        private Square CreateSign(string text)
+        private Square CreateLabel(string text, double x, double y)
         {
             var square = new Square
             {
-                ScaleX = 0.5,
+                ScaleX = 0.9,
                 ScaleY = 0.1,
+                Position = new Point3D(x, y, 0.08),
                 Rotation1 = new Quaternion(Math3D.UnitX, 90),
             };
 
-            square.DiffuseMaterial = null;
-            square.SpecularMaterial = null;
+            if (y != 0)
+            {
+                square.Rotation2 = new Quaternion(Math3D.UnitZ, 90);
+            }
 
             TextBlock tb = new TextBlock
             {
@@ -189,9 +166,21 @@ namespace EquationOfTime
                 Background = Brushes.Transparent,
                 FontFamily = new FontFamily("Algerian"),
             };
-            square.EmissiveMaterial.Brush = new VisualBrush(tb);
 
-            scene.Models.Children.Add(square);
+            var brush1 = new VisualBrush(tb);
+            square.Material = new MaterialGroup();
+            square.Material.Children.Add(new EmissiveMaterial(brush1));
+
+            var brush2 = new VisualBrush(tb);
+            square.BackMaterial = new MaterialGroup();
+            square.BackMaterial.Children.Add(new EmissiveMaterial(brush2));
+
+            var transform = new TransformGroup();
+            transform.Children.Add(new ScaleTransform(-1, 1));
+            transform.Children.Add(new TranslateTransform(1, 0));
+            brush2.RelativeTransform = transform;
+
+            labels.Children.Add(square);
             return square;
         }
 
@@ -221,7 +210,8 @@ namespace EquationOfTime
 
         void CreateLine(Vector3D v, Brush brush, bool mode)
         {
-            v *= mode ? 30 : 0.4;
+            //v *= mode ? 30 : 0.4;
+            v *= mode ? 12 : 0.4;
             Cylinder line = new Cylinder();
             line.DiffuseMaterial.Brush = brush;
             line.EmissiveMaterial.Brush = brush;
@@ -603,12 +593,13 @@ namespace EquationOfTime
                 case Key.Divide: Speed /= 2; return;
                 case Key.Add: Speed += 1; return;
                 case Key.Subtract: Speed -= 1; return;
+                case Key.Return: simulator.InvertTime(); return;
                 case Key.O: Ambiente--; return;
                 case Key.P: Ambiente++; return;
                 case Key.J: Enlarge(true); return;
                 case Key.K: Enlarge(false); return;
                 case Key.L: SwitchLights(); return;
-                case Key.I: InitSigns(); return;
+                case Key.I: ShowLabels ^= true; return;
             }
             e.Handled = false;
 		}
@@ -960,9 +951,55 @@ namespace EquationOfTime
 		}
 		int eccentricityIndex;
 
+        private void Enlarge(bool mode)
+        {
+            double smax = 0.1;
+            double emax = mode ? 1 : smax;
+            if (earth.Radius < emax)
+            {
+                earth.Radius += 0.01;
+                sun.Radius = Math.Min(earth.Radius, smax);
+            }
+        }
+
+        private void SwitchLights()
+        {
+            if (scene.Lighting.LightingGroup.Children.Contains(scene.Lighting.DirectionalLight1))
+            {
+                scene.Lighting.LightingGroup.Children.Remove(scene.Lighting.DirectionalLight1);
+                earth.SpecularMaterial.Brush = Brushes.Black;
+                Ambiente = 8;
+            }
+            else
+            {
+                scene.Lighting.LightingGroup.Children.Add(scene.Lighting.DirectionalLight1);
+                earth.SpecularMaterial.Brush = Brushes.Gray;
+                Ambiente = 255;
+            }
+
+            InitEcliptic();
+        }
+
+        public int Ambiente
+        {
+            get => this.ambiente;
+
+            set
+            {
+                value = Math.Max(0, Math.Min(255, value));
+                if (this.ambiente != value)
+                {
+                    this.ambiente = value;
+                    var c = (byte)value;
+                    scene.Lighting.AmbientLight.Color = Color.FromRgb(c, c, c);
+                }
+            }
+        }
+        private int ambiente;
+
 #region Demo Mode
 
-		void OnButtonDemo(object sender, RoutedEventArgs e)
+        void OnButtonDemo(object sender, RoutedEventArgs e)
 		{
 			InitDemo(1);
 		}
