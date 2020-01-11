@@ -384,6 +384,7 @@ namespace EquationOfTime
 		public void InvertTime()
 		{
 			dt *= -1;
+            lastCheck = 0;
 		}
 
 		public bool DemoMode

@@ -112,27 +112,33 @@ namespace EquationOfTime
 				return;
 
 			axes = new Object3D();
-			double d = 30;
-			InitLine(d, 0, 0, Brushes.DarkRed);
-			InitLine(0, d, 0, Brushes.DarkGreen);
-			InitLine(0, 0, d, Brushes.Blue);
-			scene.Models.Children.Add(axes);
+            InitAxis(Math3D.UnitX, Brushes.DarkRed);
+            InitAxis(Math3D.UnitY, Brushes.DarkGreen);
+            InitAxis(Math3D.UnitZ, Brushes.Blue);
+            scene.Models.Children.Add(axes);
 		}
 
-		void InitLine(double x, double y, double z, Brush brush)
-		{
-			Cylinder line = new Cylinder();
-			line.DiffuseMaterial.Brush = brush;
-			line.EmissiveMaterial.Brush = brush;
-			line.Radius = 0.005;
-			line.From = new Point3D(-x, -y, -z);
-			line.To = new Point3D(x, y, z);
-			axes.Children.Add(line);
-		}
+        void InitAxis(Vector3D v, Brush brush)
+        {
+            CreateLine(v, brush, true);
+            CreateLine(v, brush, false);
+        }
 
-		void InitSun()
+        void CreateLine(Vector3D v, Brush brush, bool mode)
+        {
+            v *= mode ? 20 : 0.4;
+            Cylinder line = new Cylinder();
+            line.DiffuseMaterial.Brush = brush;
+            line.EmissiveMaterial.Brush = brush;
+            line.Radius = mode ? 0.005 : 0.012;
+            line.From = mode ? (Point3D)(-v) : new Point3D(0, 0, 0);
+            line.To = (Point3D)v;
+            axes.Children.Add(line);
+        }
+
+        void InitSun()
 		{
-			Sphere sun = new Sphere { Radius = 0.2 };
+			Sphere sun = new Sphere { Radius = 0.15 };
 			sun.DiffuseMaterial.Brush = Brushes.Gold;
 			sun.EmissiveMaterial.Brush = Brushes.Gold;
 			scene.Models.Children.Add(sun);
@@ -473,9 +479,15 @@ namespace EquationOfTime
 			e.Handled = true;
 			switch (e.Key)
 			{
+				case Key.Space:
 				case Key.Return: OnButtonStart(null, null); return;
-			}
-			e.Handled = false;
+                case Key.Add: Speed += 1; return;
+                case Key.Subtract: Speed -= 1; return;
+                case Key.Multiply: Speed *= 2; return;
+                case Key.Divide: Speed /= 2; return;
+                case Key.Back: simulator.InvertTime(); return;
+            }
+            e.Handled = false;
 		}
 
 		void OnButtonInvert(object sender, RoutedEventArgs e)
