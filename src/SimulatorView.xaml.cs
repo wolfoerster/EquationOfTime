@@ -57,13 +57,12 @@ namespace EquationOfTime
             Speed = 16;
             Obliquity = 0;
             EccentricityIndex = 1;
+            Latitude = 0;
 #if !false
-            sun.Radius = earth.Radius = 0.01;
+            sun.Radius = earth.Radius = 0.011;
 #else
             ViewMode = 6;
-            SwitchLights();
             ShowCoordAxes = true;
-            ShowLabels = true;
 #endif
 
             timer.Tick += TimerTick;
@@ -105,12 +104,9 @@ namespace EquationOfTime
 			InitMeridian();
 			InitShadowBorder();
 			InitEcliptic();
-
-            SwitchLights();
-            SwitchLights();
         }
 
-        public bool ShowLabels
+        public int ShowLabels
         {
             get { return showLabels; }
             set
@@ -123,7 +119,7 @@ namespace EquationOfTime
                 }
             }
         }
-        private bool showLabels;
+        private int showLabels;
 
         private void InitLabels()
         {
@@ -133,14 +129,19 @@ namespace EquationOfTime
                 labels = null;
             }
 
-            if (!showLabels)
+            var i = showLabels % 6;
+            if (i == 0)
+            {
+                doRotate = false;
                 return;
+            }
 
             labels = new Object3D();
-            CreateLabel("Frühling, 20. März", 0, -5);
-            CreateLabel("Sommer, 21. Juni", 5, 0);
-            CreateLabel("Herbst, 23. Sept", 0, 5);
-            CreateLabel("Winter, 21. Dez", -5, 0);
+            if (i > 0) CreateLabel("Frühling, 20. März", 0, -5);
+            if (i > 1) CreateLabel("Sommer, 21. Juni", 5, 0);
+            if (i > 2) CreateLabel("Herbst, 23. Sept", 0, 5);
+            if (i > 3) CreateLabel("Winter, 21. Dez", -5, 0);
+            if (i > 4) doRotate = true;
             scene.Models.Children.Add(labels);
         }
 
@@ -226,6 +227,7 @@ namespace EquationOfTime
 		{
 			sun = new Sphere(16) { Radius = 0.1 };
 			sun.DiffuseMaterial.Brush = Brushes.Gold;
+			sun.SpecularMaterial.Brush = null;
 			sun.EmissiveMaterial.Brush = Brushes.Gold;
 			scene.Models.Children.Add(sun);
 		}
@@ -424,11 +426,9 @@ namespace EquationOfTime
 			if (!showEcliptic)
 				return;
 
-            bool isLight = scene.Lighting.LightingGroup.Children.Contains(scene.Lighting.DirectionalLight1);
-
             xyPlane = new Disk(128) { Radius = 6 };
 			Brush brush = Brushes.Green.Clone();
-			brush.Opacity = isLight ? 0.1 : 0.2;
+			brush.Opacity = 0.2;
 			xyPlane.DiffuseMaterial.Brush = brush;
 			xyPlane.EmissiveMaterial.Brush = brush;
 			xyPlane.SpecularMaterial.Brush = null;
@@ -436,7 +436,7 @@ namespace EquationOfTime
 			scene.Models.Children.Add(xyPlane);
 		}
 
-		void Update()
+        void Update()
 		{
 			earth.LockUpdates(true);
 			earth.Position = simulator.EarthPosition;
@@ -539,6 +539,10 @@ namespace EquationOfTime
 
 				case ViewModes.FreeOverview2:
 					scene.ActivateCamera(1);
+                    if (doRotate)
+                    {
+                        scene.Camera.Rotate(Math3D.UnitZ, 0.3);
+                    }
 					break;
 
 				case ViewModes.FreeOverview3:
@@ -550,7 +554,8 @@ namespace EquationOfTime
 					break;
 			}
 		}
-		double altitude, azimuth;
+        bool doRotate;
+        double altitude, azimuth;
 
 		protected override void OnPreviewMouseMove(MouseEventArgs e)
 		{
@@ -589,9 +594,11 @@ namespace EquationOfTime
 			{
 				case Key.Space: OnButtonStart(null, null); return;
                 case Key.Multiply: Speed *= 2; return;
-                case Key.NumPad6: Speed = 6; return;
-                case Key.NumPad8: Speed = 8; return;
                 case Key.Divide: Speed /= 2; return;
+                case Key.NumPad8: Speed = 8; return;
+                case Key.NumPad3: Speed = 13; return;
+                case Key.NumPad6: Speed = 16; return;
+                case Key.NumPad9: Speed = 19; return;
                 case Key.Add: Speed += 1; return;
                 case Key.Subtract: Speed -= 1; return;
                 case Key.Return: simulator.InvertTime(); return;
@@ -599,8 +606,9 @@ namespace EquationOfTime
                 case Key.P: Ambiente++; return;
                 case Key.J: Enlarge(true); return;
                 case Key.K: Enlarge(false); return;
-                case Key.L: SwitchLights(); return;
-                case Key.I: ShowLabels ^= true; return;
+                case Key.L: ShowLabels++; return;
+                case Key.NumPad1: ViewMode = 0; return;
+                case Key.NumPad2: ViewMode = 6; return;
             }
             e.Handled = false;
 		}
@@ -954,6 +962,13 @@ namespace EquationOfTime
 
         private void Enlarge(bool mode)
         {
+            if (scene.Lighting.LightingGroup.Children.Contains(scene.Lighting.DirectionalLight1))
+            {
+                scene.Lighting.LightingGroup.Children.Remove(scene.Lighting.DirectionalLight1);
+                earth.SpecularMaterial.Brush = Brushes.Black;
+                Ambiente = 8;
+            }
+
             double smax = 0.1;
             double emax = mode ? 1 : smax;
             if (earth.Radius < emax)
@@ -961,24 +976,6 @@ namespace EquationOfTime
                 earth.Radius += 0.01;
                 sun.Radius = Math.Min(earth.Radius, smax);
             }
-        }
-
-        private void SwitchLights()
-        {
-            if (scene.Lighting.LightingGroup.Children.Contains(scene.Lighting.DirectionalLight1))
-            {
-                scene.Lighting.LightingGroup.Children.Remove(scene.Lighting.DirectionalLight1);
-                earth.SpecularMaterial.Brush = Brushes.Black;
-                Ambiente = 8;
-            }
-            else
-            {
-                scene.Lighting.LightingGroup.Children.Add(scene.Lighting.DirectionalLight1);
-                earth.SpecularMaterial.Brush = Brushes.Gray;
-                Ambiente = 255;
-            }
-
-            InitEcliptic();
         }
 
         public int Ambiente

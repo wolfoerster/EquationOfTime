@@ -41,12 +41,14 @@ namespace EquationOfTime
 			WindowState = WindowState.Normal;
 
 			Screen screen = WFUtils.GetScreenByName(Properties.Settings.Default.ScreenName);
-			if (screen == null)
+            screen = null;
+
+            if (screen == null)
 			{
 				screen = WFUtils.GetPrimaryScreen();
 				Top = screen.WorkArea.Top;
-				Left = screen.WorkArea.Left + 90;
-				Width = screen.WorkArea.Width - 250;
+				Left = screen.WorkArea.Left + 100;
+				Width = screen.WorkArea.Width - 270;
 				Height = screen.WorkArea.Height;
 			}
 			else
