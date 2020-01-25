@@ -68,8 +68,8 @@
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="400"/>
       </Grid.ColumnDefinitions>
-      <wft3d:Scene3D x:Name="scene"/>
       <TextBox x:Name="textBox" Grid.Column="1" VerticalScrollBarVisibility="Visible" IsReadOnly="true" FontFamily="Consolas" FontSize="13"/>
+      <wft3d:Scene3D x:Name="scene" Grid.ColumnSpan="2"/>
     </Grid>
   </Grid>
 </UserControl>

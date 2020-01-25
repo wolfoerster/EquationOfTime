@@ -52,8 +52,9 @@ namespace EquationOfTime
 			Background = null;
 			InitScene();
 
-			StartDay = 5;
+			StartDay = 21;
 			StartMonth = 12;
+            Speed = 8;
 
 			timer.Tick += TimerTick;
 			timer.Interval = TimeSpan.FromMilliseconds(30);
@@ -138,7 +139,7 @@ namespace EquationOfTime
 
         void InitSun()
 		{
-			Sphere sun = new Sphere { Radius = 0.15 };
+			Sphere sun = new Sphere { Radius = 0.1 };
 			sun.DiffuseMaterial.Brush = Brushes.Gold;
 			sun.EmissiveMaterial.Brush = Brushes.Gold;
 			scene.Models.Children.Add(sun);
@@ -486,6 +487,8 @@ namespace EquationOfTime
                 case Key.Multiply: Speed *= 2; return;
                 case Key.Divide: Speed /= 2; return;
                 case Key.Back: simulator.InvertTime(); return;
+                case Key.NumPad5: ViewMode = 5; return;
+                case Key.NumPad6: ViewMode = 6; return;
             }
             e.Handled = false;
 		}
@@ -558,7 +561,7 @@ namespace EquationOfTime
 			{
 				viewMode = (ViewModes)value;
 				azimuth = 0;
-				altitude = 10;
+				altitude = 0;
 				FirePropertyChanged("ViewMode");
 				Update();
 			}
