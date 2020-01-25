@@ -136,7 +136,7 @@ namespace EquationOfTime
 		public void InitTime(int day, int month)
 		{
 			time = (new DateTime(2014, month, day) - refTime).TotalSeconds;
-			time -= demoMode ? 3600 : 1800; //--- correct to something before midnight
+			time -= demoMode ? 200 : 1800; //--- correct to something before midnight
 			phase = Phases.ForeMidnight;
 			Update();
 		}
@@ -394,10 +394,17 @@ namespace EquationOfTime
 				demoMode = value;
 				if (demoMode)
 				{
-					wSun = MathUtils.PIx2 / MathUtils.ToSeconds(36, 0, 0, 0);
+                    // To get the number of additional seconds in a day, just set it to 0 first.
+                    // The table of page 18 of the demo will then show this number as 'Diff'.
+#if false
+                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(36, 0, 0, 0);
 					oneDay = MathUtils.ToSeconds(1, 0, 0, 2219);
-				}
-				else
+#else
+                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(10, 0, 0, 0);
+                    oneDay = MathUtils.ToSeconds(1, 0, 0, 9309);
+#endif
+                }
+                else
 				{
 					wSun = MathUtils.PIx2 / MathUtils.ToSeconds(365, 6, 9, 9.54); //--- sidereal year
 					oneDay = MathUtils.ToSeconds(1, 0, 0, 0);
