@@ -284,7 +284,7 @@ namespace EquationOfTime
 
 		Cylinder CreateDisk(Quaternion rotation)
 		{
-			Cylinder disk = new Cylinder(128) { IsClosed = true, Radius = 1.5, ScaleZ = 0.005 };
+			Cylinder disk = new Cylinder(128) { IsClosed = true, Radius = 1.5, ScaleZ = 0.007 };
 			disk.Position = new Point3D(0, disk.ScaleZ * 0.5, 0);
 			disk.Rotation1 = rotation;
 			Brush brush = Brushes.Yellow.Clone();
@@ -365,8 +365,8 @@ namespace EquationOfTime
 			switch (viewMode)
 			{
 				case ViewModes.FixOverview:
-					scene.Camera.Position = new Point3D(0.5, -1, 12);
-					scene.Camera.LookAtOrigin();
+					scene.Camera.Position = new Point3D(1, -2, 16);
+                    scene.Camera.LookAtOrigin();
 					break;
 
 				case ViewModes.FixEclipitcPole:
@@ -377,7 +377,7 @@ namespace EquationOfTime
 
 				case ViewModes.FixNorthPole:
 					{
-						Point3D pt = earth.TranslatePoint(new Point3D(0, 0, 10));
+						Point3D pt = earth.TranslatePoint(new Point3D(0, 0, 15));
 						Vector3D v = pt.DirectionTo(earth.Position);
 
 						scene.Camera.Position = pt;
@@ -488,6 +488,7 @@ namespace EquationOfTime
                 case Key.Divide: Speed /= 2; return;
                 case Key.Back: simulator.InvertTime(); return;
                 case Key.D: simulator.DemoMode = !simulator.DemoMode; return;
+                case Key.NumPad4: ViewMode = 2; return;
                 case Key.NumPad5: ViewMode = 5; return;
                 case Key.NumPad6: ViewMode = 6; return;
             }
