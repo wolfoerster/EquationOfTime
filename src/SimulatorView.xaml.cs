@@ -487,6 +487,7 @@ namespace EquationOfTime
                 case Key.Multiply: Speed *= 2; return;
                 case Key.Divide: Speed /= 2; return;
                 case Key.Back: simulator.InvertTime(); return;
+                case Key.D: simulator.DemoMode = !simulator.DemoMode; return;
                 case Key.NumPad5: ViewMode = 5; return;
                 case Key.NumPad6: ViewMode = 6; return;
             }

@@ -120,7 +120,7 @@ namespace EquationOfTime
 		double dt = 0.01;
 
 		/// <summary>
-		/// Number of seconds in 24 hours.
+		/// Number of seconds in a solar day.
 		/// </summary>
 		double oneDay;
 
@@ -389,6 +389,8 @@ namespace EquationOfTime
 
 		public bool DemoMode
 		{
+            get => demoMode;
+
 			set
 			{
 				demoMode = value;
