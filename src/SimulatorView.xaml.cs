@@ -52,11 +52,14 @@ namespace EquationOfTime
 			Background = null;
 			InitScene();
 
-			StartDay = 21;
-			StartMonth = 12;
-            Speed = 8;
+            simulator.DemoMode = true;
+            StartDay = 15;
+            StartMonth = 1;
+            Speed = 9;
+            Obliquity = 0;
+            ShowMeridian = true;
 
-			timer.Tick += TimerTick;
+            timer.Tick += TimerTick;
 			timer.Interval = TimeSpan.FromMilliseconds(30);
 			mainWindow = Application.Current.MainWindow;
 		}
