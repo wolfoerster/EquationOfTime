@@ -53,8 +53,8 @@ namespace EquationOfTime
 			InitScene();
 
             simulator.DemoMode = true;
-            StartDay = 15;
-            StartMonth = 1;
+            StartDay = 25;
+            StartMonth = 12;
             Speed = 9;
             Obliquity = 0;
             ShowMeridian = true;
@@ -997,7 +997,7 @@ namespace EquationOfTime
 				case 18:
 					simulator.DemoMode = true;
 					Speed = 10;
-                    StartDay = 18;
+                    StartDay = 25;
 					StartMonth = 12;
 					Obliquity = 0;
 					ViewMode = (int)ViewModes.Freeze;

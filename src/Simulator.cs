@@ -136,7 +136,7 @@ namespace EquationOfTime
 		public void InitTime(int day, int month)
 		{
 			time = (new DateTime(2014, month, day) - refTime).TotalSeconds;
-			time -= demoMode ? 200 : 1800; //--- correct to something before midnight
+			time -= demoMode ? 900 : 1800; //--- correct to something before midnight
 			phase = Phases.ForeMidnight;
 			Update();
 		}
@@ -210,7 +210,8 @@ namespace EquationOfTime
 
 			//--- Update earth rotation angle around sun
 			angle = wSun * time;
-			EarthAngle = angle - 2 * Eccentricity * Math.Sin(angle - 15 * wSun * oneDay);
+            double correction = 2 * Eccentricity * Math.Sin(angle - 15 * wSun * oneDay);
+            EarthAngle = angle - correction;
 #if comment
 			//--- Ellipse mit Perihel am 3. Januar und Aphel am 6 Juli ==> max. 8 Minuten Unterschied
 			//--- Winkelabhängige Winkelgeschwindigkeit, Winkelkorrektur um 15 Tage nach hinten verschoben
@@ -402,8 +403,8 @@ namespace EquationOfTime
                     wSun = MathUtils.PIx2 / MathUtils.ToSeconds(36, 0, 0, 0);
 					oneDay = MathUtils.ToSeconds(1, 0, 0, 2219);
 #else
-                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(10, 0, 0, 0);
-                    oneDay = MathUtils.ToSeconds(1, 0, 0, 9309);
+                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(16, 0, 0, 0);
+                    oneDay = MathUtils.ToSeconds(1, 0, 0, 5492);
 #endif
                 }
                 else
