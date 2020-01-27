@@ -809,7 +809,7 @@ namespace EquationOfTime
 
 		void OnButtonDemo(object sender, RoutedEventArgs e)
 		{
-			InitDemo(17);
+			InitDemo(1);
 		}
 
 		void InitDemo(int pageIndex)
@@ -990,7 +990,7 @@ namespace EquationOfTime
 				case 18:
 					simulator.DemoMode = true;
 					Speed = 10;
-                    StartDay = 18;
+                    StartDay = 25;
 					StartMonth = 12;
 					Obliquity = 0;
 					ViewMode = (int)ViewModes.Freeze;
