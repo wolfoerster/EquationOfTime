@@ -55,7 +55,7 @@ namespace EquationOfTime
             //simulator.DemoMode = true;
             StartDay = 25;
             StartMonth = 12;
-            Speed = 9;
+            Speed = 8;
             //Obliquity = 0;
             //ShowMeridian = true;
 
@@ -525,7 +525,10 @@ namespace EquationOfTime
 			if (simulator.IsBusy)
 				return;
 
-			startButton.Content = "Stop";
+            if (stopNextNoon && Keyboard.IsKeyDown(Key.LeftCtrl))
+                simulator.Attention();
+
+            startButton.Content = "Stop";
 			simulator.Start(stopNextNoon);
 			checker.Reset();
 			timer.Start();

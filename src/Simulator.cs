@@ -223,6 +223,12 @@ namespace EquationOfTime
 			EarthPosition = new Point3D(3 * Math.Cos(EarthAngle), 3 * Math.Sin(EarthAngle), 0);
 		}
 
+        public void Attention()
+        {
+            targetAngle = EarthRotation.Angle;
+        }
+        private double targetAngle = -1, earthAngle;
+
 		bool CheckPhases()
 		{
 			if (locationMatrix.IsIdentity)
@@ -247,6 +253,16 @@ namespace EquationOfTime
 
 			if (lastCheck > 0)
 			{
+                if (targetAngle > 0)
+                {
+                    if (earthAngle <= targetAngle && EarthRotation.Angle > targetAngle)
+                    {
+                        StopNextNoon = false;
+                        targetAngle = -1;
+                        return false;
+                    }
+                }
+
 				if (angle <= 90 && oldAngle > 90) //--- sunrise
 				{
 					corrTime = time - (angle - 90) / (angle - oldAngle);
@@ -281,7 +297,8 @@ namespace EquationOfTime
 
 			oldDist = dist;
 			oldAngle = angle;
-			return true;
+            earthAngle = EarthRotation.Angle;
+            return true;
 		}
 		double oldAngle, oldDist, corrTime;
 		public bool StopNextNoon;
