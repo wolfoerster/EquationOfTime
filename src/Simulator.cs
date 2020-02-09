@@ -402,8 +402,8 @@ namespace EquationOfTime
                     wSun = MathUtils.PIx2 / MathUtils.ToSeconds(36, 0, 0, 0);
 					oneDay = MathUtils.ToSeconds(1, 0, 0, 2219);
 #else
-                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(16, 0, 0, 0);
-                    oneDay = MathUtils.ToSeconds(1, 0, 0, 5492);
+                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(12, 0, 0, 0);
+                    oneDay = MathUtils.ToSeconds(1, 0, 0, 7574);
 #endif
                 }
                 else
