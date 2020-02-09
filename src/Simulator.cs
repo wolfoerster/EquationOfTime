@@ -173,8 +173,9 @@ namespace EquationOfTime
 		{
 			Text = "";
 			lastRise = lastNoon = lastSet = lastCheck = oldAngle = oldDist = Count = 0;
+            //lastCheck = time;
 
-			while (true)
+            while (true)
 			{
 				++Count;
 				time += dt;
@@ -420,8 +421,8 @@ namespace EquationOfTime
                     wSun = MathUtils.PIx2 / MathUtils.ToSeconds(36, 0, 0, 0);
 					oneDay = MathUtils.ToSeconds(1, 0, 0, 2219);
 #else
-                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(16, 0, 0, 0);
-                    oneDay = MathUtils.ToSeconds(1, 0, 0, 5492);
+                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(12, 0, 0, 0);
+                    oneDay = MathUtils.ToSeconds(1, 0, 0, 0);
 #endif
                 }
                 else
