@@ -20,29 +20,29 @@ using System.Windows.Controls;
 
 namespace EquationOfTime
 {
-	/// <summary>
-	/// Interaction logic for MessageWindow.xaml
-	/// </summary>
-	public partial class LanguageDialog : Window
-	{
-		public LanguageDialog()
-		{
-			InitializeComponent();
-		}
+    /// <summary>
+    /// Interaction logic for MessageWindow.xaml
+    /// </summary>
+    public partial class LanguageDialog : Window
+    {
+        public LanguageDialog()
+        {
+            InitializeComponent();
+        }
 
-		void OnButtonClick(object sender, RoutedEventArgs e)
-		{
-			Choice = (sender as Button).Content.Equals("English") ? "en" : "de";
-			DialogResult = true;
-		}
+        void OnButtonClick(object sender, RoutedEventArgs e)
+        {
+            Choice = (sender as Button).Content.Equals("English") ? "en" : "de";
+            DialogResult = true;
+        }
 
-		protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e)
-		{
-			base.OnKeyDown(e);
-			if (e.Key == Key.Escape)
-				Close();
-		}
+        protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if (e.Key == Key.Escape)
+                Close();
+        }
 
-		public string Choice;
-	}
+        public string Choice;
+    }
 }
