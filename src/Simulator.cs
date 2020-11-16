@@ -237,6 +237,8 @@ namespace EquationOfTime
         }
         private double targetAngle = -1, earthAngle;
 
+        //--- Calculate the angle between location-sun and location-zenith
+        //--- Calculate the distance between sun and the meridian plane
         (double, double) GetAngleAndDist()
         {
             //--- Calculate the absolute position of the example location on earth
@@ -246,33 +248,18 @@ namespace EquationOfTime
             earthMatrix.Translate((Vector3D)EarthPosition);
             Point3D location = (locationMatrix * earthMatrix).Transform(new Point3D(0, 0, 0));
 
-            //--- Calculate the angle between direction to sun and zenith
+            //--- Calculate the angle between location-sun and location-zenith
             Vector3D dirSun = -(Vector3D)EarthPosition;
             Vector3D zenith = location - EarthPosition;
             double angle = dirSun.AngleTo(zenith);
 
-            //--- Calculate the distance between sun and meridian
+            //--- Calculate the Hesse normal form of the meridian plane: (n0 * r) = d
             Point3D earthUnitY = earthMatrix.Transform(new Point3D(0, 1, 0));
-            Vector3D normalOfMeridian = EarthPosition - earthUnitY;
-#if false
-            double dist = normalOfMeridian.Dot(dirSun);
-#else
-            //--- Hessesche Normalform: n dot L = -p ==>
-            var p = -normalOfMeridian.Dot((Vector3D)location);
+            Vector3D normalOfMeridian = EarthPosition - earthUnitY; // has a length of 1!
+            double d = normalOfMeridian.Dot((Vector3D)location);
 
-            //--- Abstand eines Punktes x zur Ebene: d = n dot x + p
-            ////var d1 = normalOfMeridian.Dot((Vector3D)location) + p;
-            ////var d2 = normalOfMeridian.Dot((Vector3D)EarthPosition) + p;
-            ////Point3D nordPol = earthMatrix.Transform(new Point3D(0, 0, 1));
-            ////var d3 = normalOfMeridian.Dot((Vector3D)nordPol) + p;
-            ////Point3D suedPol = earthMatrix.Transform(new Point3D(0, 0, -1));
-            ////var d4 = normalOfMeridian.Dot((Vector3D)suedPol) + p;
-            ////
-            //// ==> Abstand Sonne (0,0,0) zur Ebene is p!!!
-
-            double dist = p;
-#endif
-            return (angle, dist);
+            //--- Since the sun is located at the origin, its distance to the meridian is simply -d
+            return (angle, -d);
         }
 
         bool CheckPhases()
@@ -280,8 +267,8 @@ namespace EquationOfTime
             if (locationMatrix.IsIdentity)
                 return true;
 
-            //--- Calculate the angle between direction to sun and zenith
-            //--- Calculate the distance between sun and meridian
+            //--- Calculate the angle between location-sun and location-zenith
+            //--- Calculate the distance between sun and the meridian plane
             var (angle, dist) = GetAngleAndDist();
             var result = true;
 
@@ -299,16 +286,14 @@ namespace EquationOfTime
 
                 if (angle <= 90 && oldAngle > 90) //--- sunrise
                 {
-                    // FALSCH, weil deltaT (= time - lastCheck) nicht 1, sondern 1.01 ist !!
-                    corrTime = time - (angle - 90) / (angle - oldAngle);
+                    var t = new LinearTransform(angle, oldAngle, time, lastCheck);
+                    corrTime = t.Transform(90);
                     Phase = Phases.Forenoon;
                 }
-
-                if (dist >= 0 && oldDist < 0) //--- noon
+                else if (dist >= 0 && oldDist < 0) //--- noon
                 {
-                    // RICHTIG !!
-                    var t = new LinearTransform(time, lastCheck, dist, oldDist);
-                    corrTime = t.BackTransform(0);
+                    var t = new LinearTransform(dist, oldDist, time, lastCheck);
+                    corrTime = t.Transform(0);
 
                     if (StopNextNoon)
                     {
@@ -316,24 +301,21 @@ namespace EquationOfTime
                         time = corrTime;
                         Update();
                         (angle, dist) = GetAngleAndDist();
-                        dist = 0;
                         result = false;
                     }
 
                     Phase = Phases.Afternoon;
                 }
-
-                if (angle >= 90 && oldAngle < 90) //--- sunset
+                else if (angle >= 90 && oldAngle < 90) //--- sunset
                 {
-                    // FALSCH, weil deltaT nicht 1, sondern 1.01 ist !!
-                    corrTime = time - (angle - 90) / (angle - oldAngle);
+                    var t = new LinearTransform(angle, oldAngle, time, lastCheck);
+                    corrTime = t.Transform(90);
                     Phase = Phases.ForeMidnight;
                 }
-
-                if (dist <= 0 && oldDist > 0) //--- midnight
+                else if (dist <= 0 && oldDist > 0) //--- midnight
                 {
-                    // FALSCH, weil deltaT nicht 1, sondern 1.01 ist !!
-                    corrTime = time - dist / (dist - oldDist);
+                    var t = new LinearTransform(dist, oldDist, time, lastCheck);
+                    corrTime = t.Transform(0);
                     Phase = Phases.AfterMidnight;
                 }
             }
