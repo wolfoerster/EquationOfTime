@@ -222,11 +222,10 @@ namespace EquationOfTime
             EarthPosition = new Point3D(3 * Math.Cos(EarthAngle), 3 * Math.Sin(EarthAngle), 0);
         }
 
-        bool CheckPhases()
+        //--- Calculate the angle between location-sun and location-zenith
+        //--- Calculate the distance between sun and the meridian plane
+        (double, double) GetAngleAndDist()
         {
-            if (locationMatrix.IsIdentity)
-                return true;
-
             //--- Calculate the absolute position of the example location on earth
             Matrix3D earthMatrix = new Matrix3D();
             earthMatrix.Rotate(EarthRotation);
@@ -234,53 +233,74 @@ namespace EquationOfTime
             earthMatrix.Translate((Vector3D)EarthPosition);
             Point3D location = (locationMatrix * earthMatrix).Transform(new Point3D(0, 0, 0));
 
-            //--- Calculate the angle between direction to sun and zenith
+            //--- Calculate the angle between location-sun and location-zenith
             Vector3D dirSun = -(Vector3D)EarthPosition;
             Vector3D zenith = location - EarthPosition;
             double angle = dirSun.AngleTo(zenith);
 
-            //--- Calculate the distance between sun and meridian
+            //--- Calculate the Hesse normal form of the meridian plane: (n0 * r) = d
             Point3D earthUnitY = earthMatrix.Transform(new Point3D(0, 1, 0));
-            Vector3D normalOfMeridian = EarthPosition - earthUnitY;
-            double dist = normalOfMeridian.Dot(dirSun);
+            Vector3D normalOfMeridian = EarthPosition - earthUnitY; // has a length of 1!
+            double d = normalOfMeridian.Dot((Vector3D)location);
+
+            //--- Since the sun is located at the origin, its distance to the meridian is simply -d
+            return (angle, -d);
+        }
+
+        bool CheckPhases()
+        {
+            if (locationMatrix.IsIdentity)
+                return true;
+
+            //--- Calculate the angle between location-sun and location-zenith
+            //--- Calculate the distance between sun and the meridian plane
+            var (angle, dist) = GetAngleAndDist();
+            var result = true;
 
             if (lastCheck > 0)
             {
                 if (angle <= 90 && oldAngle > 90) //--- sunrise
                 {
-                    corrTime = time - (angle - 90) / (angle - oldAngle);
+                    var t = new LinearTransform(angle, oldAngle, time, lastCheck);
+                    corrTime = t.Transform(90);
                     Phase = Phases.Forenoon;
                 }
 
                 if (dist >= 0 && oldDist < 0) //--- noon
                 {
-                    corrTime = time - dist / (dist - oldDist);
-                    Phase = Phases.Afternoon;
+                    var t = new LinearTransform(dist, oldDist, time, lastCheck);
+                    corrTime = t.Transform(0);
+
                     if (StopNextNoon)
                     {
                         StopNextNoon = false;
                         time = corrTime;
                         Update();
-                        return false;
+                        (angle, dist) = GetAngleAndDist();
+                        result = false;
                     }
+
+                    Phase = Phases.Afternoon;
                 }
 
                 if (angle >= 90 && oldAngle < 90) //--- sunset
                 {
-                    corrTime = time - (angle - 90) / (angle - oldAngle);
+                    var t = new LinearTransform(angle, oldAngle, time, lastCheck);
+                    corrTime = t.Transform(90);
                     Phase = Phases.ForeMidnight;
                 }
 
                 if (dist <= 0 && oldDist > 0) //--- midnight
                 {
-                    corrTime = time - dist / (dist - oldDist);
+                    var t = new LinearTransform(dist, oldDist, time, lastCheck);
+                    corrTime = t.Transform(0);
                     Phase = Phases.AfterMidnight;
                 }
             }
 
             oldDist = dist;
             oldAngle = angle;
-            return true;
+            return result;
         }
         double oldAngle, oldDist, corrTime;
         public bool StopNextNoon;
