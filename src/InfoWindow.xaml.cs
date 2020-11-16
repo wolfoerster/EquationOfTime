@@ -25,76 +25,76 @@ using System;
 
 namespace EquationOfTime
 {
-	/// <summary>
-	/// Interaction logic for InfoWindow.xaml
-	/// </summary>
-	public partial class InfoWindow : Window, INotifyPropertyChanged
-	{
-		#region INotifyPropertyChanged
+    /// <summary>
+    /// Interaction logic for InfoWindow.xaml
+    /// </summary>
+    public partial class InfoWindow : Window, INotifyPropertyChanged
+    {
+        #region INotifyPropertyChanged
 
-		public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-		protected virtual void FirePropertyChanged(string propertyName)
-		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
+        protected virtual void FirePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-		#endregion INotifyPropertyChanged
+        #endregion INotifyPropertyChanged
 
-		public InfoWindow(string language)
-		{
-			InitializeComponent();
-			subDir = language + "\\";
-		}
-		string subDir;
+        public InfoWindow(string language)
+        {
+            InitializeComponent();
+            subDir = language + "\\";
+        }
+        string subDir;
 
-		public int PageIndex
-		{
-			get { return pageIndex; }
-			set
-			{
-				if (value > 0 && pageIndex != value && ShowText(value))
-				{
-					pageIndex = value;
-					pageText.Text = string.Format("Page {0}/27", pageIndex);
-					FirePropertyChanged("PageIndex");
-				}
-			}
-		}
-		private int pageIndex;
+        public int PageIndex
+        {
+            get { return pageIndex; }
+            set
+            {
+                if (value > 0 && pageIndex != value && ShowText(value))
+                {
+                    pageIndex = value;
+                    pageText.Text = string.Format("Page {0}/27", pageIndex);
+                    FirePropertyChanged("PageIndex");
+                }
+            }
+        }
+        private int pageIndex;
 
-		bool ShowText(int index)
-		{
-			string dir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-			string name = dir + "\\" + subDir + index.ToString("D2") + ".txt";
-			if (File.Exists(name))
-			{
+        bool ShowText(int index)
+        {
+            string dir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string name = dir + "\\" + subDir + index.ToString("D2") + ".txt";
+            if (File.Exists(name))
+            {
                 bool firstTime = textBlock.Text.Length == 0;
-				textBlock.Text = File.ReadAllText(name, Encoding.Default);
+                textBlock.Text = File.ReadAllText(name, Encoding.Default);
                 if (firstTime)
-				    UpdatePosition();
-				return true;
-			}
-			FirePropertyChanged("Finished");
-			return false;
-		}
+                    UpdatePosition();
+                return true;
+            }
+            FirePropertyChanged("Finished");
+            return false;
+        }
 
-		private void UpdatePosition()
-		{
-			textBlock.Measure(new Size(1234, 1234));
-			Size size = textBlock.DesiredSize;
-			double width = size.Width + 17;
-			double height = size.Height + 63;
-			Screen screen = WFUtils.GetScreenByPixel(0, 0);
-			Left = screen.WorkArea.Right - width;
-			Top = (screen.WorkArea.Bottom - height) * 0.5;
-		}
+        private void UpdatePosition()
+        {
+            textBlock.Measure(new Size(1234, 1234));
+            Size size = textBlock.DesiredSize;
+            double width = size.Width + 17;
+            double height = size.Height + 63;
+            Screen screen = WFUtils.GetScreenByPixel(0, 0);
+            Left = screen.WorkArea.Right - width;
+            Top = (screen.WorkArea.Bottom - height) * 0.5;
+        }
 
-		void OnButtonClick(object sender, RoutedEventArgs e)
-		{
-			int i = ((sender as Button).Content as string).Equals("Prev") ? -1 : 1;
-			PageIndex += i;
-		}
+        void OnButtonClick(object sender, RoutedEventArgs e)
+        {
+            int i = ((sender as Button).Content as string).Equals("Prev") ? -1 : 1;
+            PageIndex += i;
+        }
     }
 }
