@@ -210,7 +210,8 @@ namespace EquationOfTime
 
             //--- Update earth rotation angle around sun
             angle = wSun * time;
-            EarthAngle = angle - 2 * Eccentricity * Math.Sin(angle - 15 * wSun * oneDay);
+            var corr = 2 * Eccentricity * Math.Sin(angle - 15 * wSun * oneDay);
+            EarthAngle = angle - corr;
 #if comment
             //--- Ellipse mit Perihel am 3. Januar und Aphel am 6 Juli ==> max. 8 Minuten Unterschied
             //--- Winkelabhängige Winkelgeschwindigkeit, Winkelkorrektur um 15 Tage nach hinten verschoben
@@ -344,8 +345,11 @@ namespace EquationOfTime
             if (demoMode)
             {
                 if (Phase != Phases.Afternoon)//--- only add text for noon
+                {
                     return;
-                corrTime -= 9.5;//--- not sure why, but in demo mode noon is at 12:00:09.5
+                }
+
+                //corrTime -= 9.5;//--- not sure why, but in demo mode noon is at 12:00:09.5
             }
 
             bool firstTime = prevTime == 0;
@@ -382,7 +386,12 @@ namespace EquationOfTime
             int m = (int)t;
             t -= m;
 
+#if !false
             t *= 60;
+#else
+            var secondsPerMinute = oneDay / 24.0 / 60.0;
+            t *= secondsPerMinute;
+#endif
             int s = (int)t;
 
             return string.Format("{0:D2}:{1:D2}:{2:D2}", h, m, s);
@@ -422,8 +431,8 @@ namespace EquationOfTime
                     wSun = MathUtils.PIx2 / MathUtils.ToSeconds(36, 0, 0, 0);
                     oneDay = MathUtils.ToSeconds(1, 0, 0, 2219);
 #else
-                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(12, 0, 0, 0);
-                    oneDay = MathUtils.ToSeconds(1, 0, 0, 7574);
+                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(16, 0, 0, 0);
+                    oneDay = MathUtils.ToSeconds(1, 0, 0, 5492);
 #endif
                 }
                 else
