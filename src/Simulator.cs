@@ -311,6 +311,19 @@ namespace EquationOfTime
             get { return phase; }
             protected set
             {
+                if (!demoMode && Text.Length > 0)
+                {
+                    var nothing = " --:--:--  ----";
+                    if (phase == Phases.AfterMidnight && value == Phases.Afternoon)
+                    {
+                        Text += nothing;
+                    }
+                    else if (phase == Phases.Afternoon && value == Phases.AfterMidnight)
+                    {
+                        Text += nothing;
+                    }
+                }
+
                 phase = value;
                 switch (phase)
                 {
@@ -353,7 +366,7 @@ namespace EquationOfTime
             }
 
             bool firstTime = prevTime == 0;
-            double delta = corrTime - prevTime;
+            double delta = corrTime - prevTime - oneDay;
             prevTime = corrTime;
 
             if (Text.Length == 0)//--- wait for first midnight
@@ -363,9 +376,9 @@ namespace EquationOfTime
             Text += string.Format("  {0} {1}", TimeToString(corrTime), str);
         }
 
-        string DiffToString(double seconds)
+        string DiffToString(double delta)
         {
-            int diff = (int)Math.Round(seconds - oneDay);
+            int diff = (int)Math.Round(delta);
             string sign = diff == 0 ? " " : diff < 0 ? "-" : "+";
             return sign + Math.Abs(diff).ToString(demoMode ? "D4" : "D3");
         }
@@ -386,12 +399,7 @@ namespace EquationOfTime
             int m = (int)t;
             t -= m;
 
-#if !false
             t *= 60;
-#else
-            var secondsPerMinute = oneDay / 24.0 / 60.0;
-            t *= secondsPerMinute;
-#endif
             int s = (int)t;
 
             return string.Format("{0:D2}:{1:D2}:{2:D2}", h, m, s);
@@ -431,8 +439,8 @@ namespace EquationOfTime
                     wSun = MathUtils.PIx2 / MathUtils.ToSeconds(36, 0, 0, 0);
                     oneDay = MathUtils.ToSeconds(1, 0, 0, 2219);
 #else
-                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(16, 0, 0, 0);
-                    oneDay = MathUtils.ToSeconds(1, 0, 0, 5492);
+                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(20, 0, 0, 0);
+                    oneDay = MathUtils.ToSeconds(1, 0, 0, 4286);
 #endif
                 }
                 else
