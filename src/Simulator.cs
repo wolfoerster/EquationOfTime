@@ -147,6 +147,20 @@ namespace EquationOfTime
             Update();
         }
 
+        public void Init(int num)
+        {
+            if (num < 0)
+                wSun = MathUtils.PIx2 / MathUtils.ToSeconds(365, 6, 9, 9.54); //--- sidereal year
+            else if (num > 0)
+                wSun = MathUtils.PIx2 / MathUtils.ToSeconds(num, 0, 0, 0);
+            else
+                wSun = 0;
+
+            time = timeStart = 0;
+            phase = Phases.Afternoon;
+            Update();
+        }
+
         public void Start(bool stopNextNoon = false)
         {
             if (!worker.IsBusy)
@@ -210,7 +224,7 @@ namespace EquationOfTime
             var totalTime = timeStart + time;
 
             //--- Update earth rotation around itself
-            double angle = MathUtils.ToDegrees(wEarth * totalTime);
+            double angle = 180 + MathUtils.ToDegrees(wEarth * totalTime);
             EarthRotation = new Quaternion(Math3D.UnitZ, angle);
 
             //--- Update axial tilt
@@ -368,11 +382,10 @@ namespace EquationOfTime
             {
                 if (Phase != Phases.Afternoon)//--- only add text for noon
                     return;
-                corrTime -= 9.5;//--- not sure why, but in demo mode noon is at 12:00:09.5
             }
 
             bool firstTime = prevTime == 0;
-            double delta = corrTime - prevTime;
+            double delta = corrTime - prevTime - oneDay;
             prevTime = corrTime;
 
             if (Text.Length == 0)//--- wait for first midnight
@@ -382,9 +395,9 @@ namespace EquationOfTime
             Text += string.Format("  {0} {1}", TimeToString(corrTime), str);
         }
 
-        string DiffToString(double seconds)
+        string DiffToString(double delta)
         {
-            int diff = (int)Math.Round(seconds - oneDay);
+            int diff = (int)Math.Round(delta);
             string sign = diff == 0 ? " " : diff < 0 ? "-" : "+";
             return sign + Math.Abs(diff).ToString(demoMode ? "D4" : "D3");
         }
@@ -445,8 +458,8 @@ namespace EquationOfTime
                     wSun = MathUtils.PIx2 / MathUtils.ToSeconds(36, 0, 0, 0);
                     oneDay = MathUtils.ToSeconds(1, 0, 0, 2219);
 #else
-                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(12, 0, 0, 0);
-                    oneDay = MathUtils.ToSeconds(1, 0, 0, 0);
+                    wSun = MathUtils.PIx2 / MathUtils.ToSeconds(16, 0, 0, 0);
+                    oneDay = MathUtils.ToSeconds(1, 0, 0, 5492);
 #endif
                 }
                 else

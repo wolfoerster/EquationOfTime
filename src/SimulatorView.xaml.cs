@@ -52,11 +52,8 @@ namespace EquationOfTime
             Background = null;
             InitScene();
 
-            simulator.DemoMode = true;
-            //StartDay = 25;
-            StartDay = 24;
-            StartMonth = 12;
-            Speed = 10;
+            simulator.Init(0);
+            Speed = 9;
             Obliquity = 0;
             ShowMeridian = true;
 
@@ -370,7 +367,7 @@ namespace EquationOfTime
             {
                 case ViewModes.FixOverview:
                     //scene.Camera.Position = new Point3D(1, -2, 16);
-                    scene.Camera.Position = new Point3D(0.5, -2, 16);
+                    scene.Camera.Position = new Point3D(0.8, -2, 16);
                     scene.Camera.LookAtOrigin();
                     break;
 
@@ -493,9 +490,12 @@ namespace EquationOfTime
                 case Key.Divide: Speed /= 2; return;
                 case Key.Back: simulator.InvertTime(); return;
                 case Key.D: simulator.DemoMode = !simulator.DemoMode; return;
-                case Key.NumPad4: ViewMode = 2; return;
+                case Key.NumPad4: ViewMode = 0; return;
                 case Key.NumPad5: ViewMode = 5; return;
                 case Key.NumPad6: ViewMode = 6; return;
+                case Key.NumPad7: simulator.Init(0); Update(); return;
+                case Key.NumPad8: simulator.Init(24); Update(); return;
+                case Key.NumPad9: simulator.Init(-1); Update(); return;
             }
             e.Handled = false;
         }
@@ -518,15 +518,16 @@ namespace EquationOfTime
             if (simulator.IsBusy)
                 simulator.StopNextNoon = true;
             else
-                Start(true);
+                Start(1);
         }
 
-        void Start(bool stopNextNoon = false)
+        void Start(int mode = 0)
         {
             if (simulator.IsBusy)
                 return;
 
-            if (stopNextNoon && Keyboard.IsKeyDown(Key.LeftCtrl))
+            bool stopNextNoon = mode > 0;
+            if (mode > 1)
                 simulator.Attention();
 
             startButton.Content = "Stop";
@@ -821,7 +822,14 @@ namespace EquationOfTime
 
         void OnButtonDemo(object sender, RoutedEventArgs e)
         {
+#if false
             InitDemo(17);
+#else
+            if (simulator.IsBusy)
+                simulator.StopNextNoon = true;
+            else
+                Start(2);
+#endif
         }
 
         void InitDemo(int pageIndex)
@@ -949,7 +957,7 @@ namespace EquationOfTime
                     ShowEcliptic = false;
                     ShowMeridian = true;
                     ShowLocation = true;
-                    Start(true);
+                    Start(1);
                     return;
 
                 case 13:
@@ -1066,6 +1074,6 @@ namespace EquationOfTime
             }
         }
 
-        #endregion Demo Mode
+#endregion Demo Mode
     }
 }
