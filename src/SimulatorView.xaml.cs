@@ -56,6 +56,7 @@ namespace EquationOfTime
             Speed = 9;
             Obliquity = 0;
             ShowMeridian = true;
+            ShowEcliptic = true;
 
             timer.Tick += TimerTick;
             timer.Interval = TimeSpan.FromMilliseconds(30);
@@ -64,7 +65,7 @@ namespace EquationOfTime
         Simulator simulator = new Simulator();
         DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.Render);
         Brush defBrush = new SolidColorBrush(Color.FromRgb(64, 64, 32));
-        Cylinder latitude, meridian, shadowBorder;
+        Cylinder latitude, meridian, shadowBorder, laser;
         Sphere earth, location;
         Disk horizon, xyPlane;
         Object3D axes;
@@ -259,6 +260,24 @@ namespace EquationOfTime
             }
         }
 
+        void InitLaser()
+        {
+            if (laser != null)
+            {
+                earth.Children.Remove(laser);
+                laser = null;
+            }
+
+            if (!showLaser)
+                return;
+
+            laser = new Cylinder();
+            laser.To = new Point3D(3.3, 0, 0);
+            laser.Radius = 0.02;
+            laser.DiffuseMaterial.Brush = laser.EmissiveMaterial.Brush = Brushes.MidnightBlue;
+            earth.Children.Add(laser);
+        }
+
         void InitMeridian()
         {
             if (meridian != null)
@@ -366,13 +385,12 @@ namespace EquationOfTime
             switch (viewMode)
             {
                 case ViewModes.FixOverview:
-                    //scene.Camera.Position = new Point3D(1, -2, 16);
                     scene.Camera.Position = new Point3D(0.8, -2, 16);
                     scene.Camera.LookAtOrigin();
                     break;
 
                 case ViewModes.FixEclipitcPole:
-                    scene.Camera.Position = earth.Position + 10 * Math3D.UnitZ;
+                    scene.Camera.Position = earth.Position + 13 * Math3D.UnitZ;
                     scene.Camera.LookDirection = -Math3D.UnitZ;
                     scene.Camera.UpDirection = Math3D.UnitY;
                     break;
@@ -489,15 +507,28 @@ namespace EquationOfTime
                 case Key.Multiply: Speed *= 2; return;
                 case Key.Divide: Speed /= 2; return;
                 case Key.Back: simulator.InvertTime(); return;
+                case Key.A: ShowEarthAngle(true); return;
+                case Key.S: ShowEarthAngle(false); return;
                 case Key.D: simulator.DemoMode = !simulator.DemoMode; return;
                 case Key.NumPad4: ViewMode = 0; return;
                 case Key.NumPad5: ViewMode = 5; return;
                 case Key.NumPad6: ViewMode = 6; return;
                 case Key.NumPad7: simulator.Init(0); Update(); return;
-                case Key.NumPad8: simulator.Init(24); Update(); return;
+                case Key.NumPad8: simulator.Init(16); Update(); return;
                 case Key.NumPad9: simulator.Init(-1); Update(); return;
             }
             e.Handled = false;
+        }
+
+        void ShowEarthAngle(bool mode)
+        {
+            if (xyPlane != null)
+            {
+                if (mode)
+                    xyPlane.StopDegrees = MathUtils.ToDegrees(simulator.EarthAngle);
+                else
+                    xyPlane.StartDegrees = xyPlane.StopDegrees;
+            }
         }
 
         void OnButtonInvert(object sender, RoutedEventArgs e)
@@ -677,6 +708,21 @@ namespace EquationOfTime
         }
         bool showMeridian;
 
+        public bool ShowLaser
+        {
+            get { return showLaser; }
+            set
+            {
+                if (showLaser != value)
+                {
+                    showLaser = value;
+                    InitLaser();
+                    FirePropertyChanged("ShowLaser");
+                }
+            }
+        }
+        bool showLaser;
+
         public bool ShowEcliptic
         {
             get { return showEcliptic; }
@@ -811,6 +857,7 @@ namespace EquationOfTime
                         case 1: simulator.Eccentricity = 0.0; break;
                         case 2: simulator.Eccentricity = 0.2; break;
                         case 3: simulator.Eccentricity = 0.5; break;
+                        case 4: simulator.Eccentricity = 0.8; break;
                     }
                     FirePropertyChanged("EccentricityIndex");
                 }

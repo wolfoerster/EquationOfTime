@@ -64,10 +64,12 @@ namespace EquationOfTime
         /// </summary>
         public double Eccentricity = 0.0167;
 
+        static double SiderealDay = MathUtils.ToSeconds(0, 23, 56, 4.1);
+
         /// <summary>
         /// Angular velocity of the earth rotating around itself.
         /// </summary>
-        double wEarth = MathUtils.PIx2 / MathUtils.ToSeconds(0, 23, 56, 4.1); //--- sidereal day
+        double wEarth = MathUtils.PIx2 / SiderealDay;
 
         /// <summary>
         /// Mean angular velocity of the earth orbiting the sun.
@@ -231,16 +233,19 @@ namespace EquationOfTime
             AxialTilt = new Quaternion(Math3D.UnitY, -Obliquity);// ==> max. 15 Minuten Unterschied
 
             //--- Update earth rotation angle around sun
-            angle = wSun * totalTime;
-            double correction = 2 * Eccentricity * Math.Sin(angle - 15 * wSun * oneDay);
-            EarthAngle = angle - correction;
-#if comment
-			//--- Ellipse mit Perihel am 3. Januar und Aphel am 6 Juli ==> max. 8 Minuten Unterschied
-			//--- Winkelabhängige Winkelgeschwindigkeit, Winkelkorrektur um 15 Tage nach hinten verschoben
-			//--- Winkel zwischen grosser Halbachse und SommerWinterAchse (unserer x Achse) ist 12.25 Grad.
-			//--- Siehe auch http://info.ifpan.edu.pl/firststep/aw-works/fsII/mul/mueller.html
-			//--- The above formula is an approximation for very small eccentricity values only (< 0.1).
-#endif
+            EarthAngle = wSun * totalTime;
+
+            if (timeStart > 0) // d.h. im Normafall
+            {
+                double correction = 2 * Eccentricity * Math.Sin(EarthAngle - 15 * wSun * oneDay);
+                //--- Ellipse mit Perihel am 3. Januar und Aphel am 6 Juli ==> max. 8 Minuten Unterschied
+                //--- Winkelabhängige Winkelgeschwindigkeit, Winkelkorrektur um 15 Tage nach hinten verschoben
+                //--- Winkel zwischen grosser Halbachse und SommerWinterAchse (unserer x Achse) ist 12.25 Grad.
+                //--- Siehe auch http://info.ifpan.edu.pl/firststep/aw-works/fsII/mul/mueller.html
+                //--- The above formula is an approximation for very small eccentricity values only (< 0.1).
+                EarthAngle -= correction;
+            }
+
             //--- Update earth position
             EarthPosition = new Point3D(3 * Math.Cos(EarthAngle), 3 * Math.Sin(EarthAngle), 0);
         }

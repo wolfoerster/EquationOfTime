@@ -39,7 +39,9 @@
       <ComboBox SelectedIndex="{Binding EccentricityIndex}" Margin="6,0,0,0" Width="60">
         <ComboBoxItem Content="0.0167"/>
         <ComboBoxItem Content="0.0"/>
-        <ComboBoxItem Content="0.1"/>
+        <ComboBoxItem Content="0.2"/>
+        <ComboBoxItem Content="0.5"/>
+        <ComboBoxItem Content="0.8"/>
       </ComboBox>
       <Label Content="Obliquity"/>
       <wft3d:NumberBox Number="{Binding Obliquity}" Minimum="0" Maximum="90" TBMinWidth="25"/>
@@ -60,6 +62,8 @@
       <CheckBox IsChecked="{Binding ShowHorizon}"/>
       <Label Content="Meridian"/>
       <CheckBox IsChecked="{Binding ShowMeridian}"/>
+      <Label Content="Laser"/>
+      <CheckBox IsChecked="{Binding ShowLaser}"/>
       <Label Content="Shadowborder"/>
       <CheckBox IsChecked="{Binding ShowShadowBorder}"/>
     </wft3d:StackPanelH>
