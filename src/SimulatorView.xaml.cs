@@ -55,6 +55,7 @@ namespace EquationOfTime
             simulator.Init(0);
             Speed = 9;
             Obliquity = 0;
+            EccentricityIndex = 1;
             ShowMeridian = true;
             ShowEcliptic = true;
 
@@ -382,6 +383,9 @@ namespace EquationOfTime
             scene.Camera.FieldOfView = 45;
             scene.Lighting.DirectionalLight2.Direction = (Vector3D)earth.Position;
 
+            if (IsViewModeChanging())
+                return;
+
             switch (viewMode)
             {
                 case ViewModes.FixOverview:
@@ -419,21 +423,16 @@ namespace EquationOfTime
                             Vector3D v = p0.DirectionTo(px);
                             scene.Camera.Position = px + 9 * v;
                             scene.Camera.LookDirection = -v;
-
-                            v = p0.DirectionTo(pz);
-                            scene.Camera.UpDirection = v;
+                            scene.Camera.UpDirection = p0.DirectionTo(pz);
                         }
                         else
                         {
                             scene.Camera.FieldOfView = 80;
-
-                            Vector3D v = p0.DirectionTo(px);
                             scene.Camera.Position = px;
-                            scene.Camera.UpDirection = v;
+                            scene.Camera.UpDirection = p0.DirectionTo(px);
 
-                            Point3D pt = location.TranslatePoint(new Point3D(0, 0, -1));
-                            v = p0.DirectionTo(pt);
-                            scene.Camera.LookDirection = v;
+                            pz = location.TranslatePoint(new Point3D(0, 0, -1));
+                            scene.Camera.LookDirection = p0.DirectionTo(pz);
 
                             scene.Camera.ChangePitch(-altitude);
 
@@ -508,16 +507,78 @@ namespace EquationOfTime
                 case Key.Divide: Speed /= 2; return;
                 case Key.Back: simulator.InvertTime(); return;
                 case Key.A: ShowEarthAngle(true); return;
-                case Key.S: ShowEarthAngle(false); return;
                 case Key.D: simulator.DemoMode = !simulator.DemoMode; return;
+                case Key.NumPad1: StartViewModeTransition(); return;
                 case Key.NumPad4: ViewMode = 0; return;
                 case Key.NumPad5: ViewMode = 5; return;
                 case Key.NumPad6: ViewMode = 6; return;
                 case Key.NumPad7: simulator.Init(0); Update(); return;
-                case Key.NumPad8: simulator.Init(16); Update(); return;
+                case Key.NumPad8: simulator.Init(32); Update(); return;
                 case Key.NumPad9: simulator.Init(-1); Update(); return;
             }
             e.Handled = false;
+        }
+
+        private void StartViewModeTransition()
+        {
+            //if (IsViewModeChanging())
+                return;
+
+            if (transitionTimer == null)
+            {
+                transitionTimer = new DispatcherTimer(DispatcherPriority.Render);
+                transitionTimer.Interval = TimeSpan.FromMilliseconds(30);
+                transitionTimer.Tick += TransitionTimerTick;
+            }
+
+            transitionTimer.Start();
+        }
+
+        void TransitionTimerTick(object sender, EventArgs e)
+        {
+#if false
+            Point3D p0 = location.TranslatePoint(new Point3D(0, 0, 0));
+            Point3D px = location.TranslatePoint(new Point3D(1, 0, 0));
+            Point3D pz = location.TranslatePoint(new Point3D(0, 0, -1));
+            var targetPosition = px;
+            var targetLookDirection = p0.DirectionTo(pz);
+            var targetUpDirection = p0.DirectionTo(px);
+#else
+            var targetPosition = new Point3D(4, 1, 1);
+            var targetLookDirection = new Vector3D();
+            var targetUpDirection = new Vector3D();
+            Math3D.LookAt(Math3D.Origin, targetPosition, ref targetLookDirection, ref targetUpDirection);
+#endif
+            var targetFieldOfView = 80;
+
+            var dist = (targetPosition - scene.Camera.Position).Length;
+            if (dist < 1e-3)
+            {
+                transitionTimer.Stop();
+            }
+
+            var t = 0.02;
+
+            var ft = new LinearTransform(0, 1, scene.Camera.FieldOfView, targetFieldOfView);
+            scene.Camera.FieldOfView = ft.Transform(t);
+
+            var pt = new Point3DTransform();
+            pt.Init(scene.Camera.Position, targetPosition);
+            scene.Camera.Position = pt.GetPoint(t);
+
+            var vt = new Vector3DTransform();
+            vt.Init(scene.Camera.LookDirection, targetLookDirection);
+            scene.Camera.LookDirection = vt.GetVector(t);
+
+            vt.Init(scene.Camera.UpDirection, targetUpDirection);
+            scene.Camera.UpDirection = vt.GetVector(t);
+        }
+
+        DispatcherTimer transitionTimer;
+
+        bool IsViewModeChanging()
+        {
+            return transitionTimer != null && transitionTimer.IsEnabled;
         }
 
         void ShowEarthAngle(bool mode)
@@ -527,7 +588,7 @@ namespace EquationOfTime
                 if (mode)
                     xyPlane.StopDegrees = MathUtils.ToDegrees(simulator.EarthAngle);
                 else
-                    xyPlane.StartDegrees = xyPlane.StopDegrees;
+                    xyPlane.StartDegrees = xyPlane.StopDegrees == 360 ? 0 : xyPlane.StopDegrees;
             }
         }
 
@@ -865,7 +926,7 @@ namespace EquationOfTime
         }
         int eccentricityIndex;
 
-        #region Demo Mode
+#region Demo Mode
 
         void OnButtonDemo(object sender, RoutedEventArgs e)
         {
@@ -873,9 +934,14 @@ namespace EquationOfTime
             InitDemo(17);
 #else
             if (simulator.IsBusy)
+            {
                 simulator.StopNextNoon = true;
+            }
             else
+            {
+                ShowEarthAngle(false);
                 Start(2);
+            }
 #endif
         }
 
