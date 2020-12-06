@@ -52,8 +52,12 @@ namespace EquationOfTime
 			Background = null;
 			InitScene();
 
-			StartDay = 5;
-			StartMonth = 12;
+			ShowMeridian = true;
+			simulator.DemoMode = true;
+			EccentricityIndex = 1;
+			Speed = 12;
+			StartDay = 26;
+			StartMonth = 8;
 
 			timer.Tick += TimerTick;
 			timer.Interval = TimeSpan.FromMilliseconds(30);
