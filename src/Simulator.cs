@@ -163,6 +163,12 @@ namespace EquationOfTime
             Update();
         }
 
+        public void Revolute(int numDays)
+        {
+            time += numDays * SiderealDay;
+            Update();
+        }
+
         public void Start(bool stopNextNoon = false)
         {
             if (!worker.IsBusy)

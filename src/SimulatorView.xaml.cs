@@ -508,15 +508,35 @@ namespace EquationOfTime
                 case Key.Back: simulator.InvertTime(); return;
                 case Key.A: ShowEarthAngle(true); return;
                 case Key.D: simulator.DemoMode = !simulator.DemoMode; return;
-                case Key.NumPad1: StartViewModeTransition(); return;
+                case Key.NumPad1: Revolute(+1); return;
+                case Key.NumPad2: OnButtonNoon(null, null); return;
+                case Key.NumPad3: Revolute(-1); return;
                 case Key.NumPad4: ViewMode = 0; return;
                 case Key.NumPad5: ViewMode = 5; return;
-                case Key.NumPad6: ViewMode = 6; return;
+                case Key.NumPad6: ViewMode6(); return;
                 case Key.NumPad7: simulator.Init(0); Update(); return;
                 case Key.NumPad8: simulator.Init(32); Update(); return;
                 case Key.NumPad9: simulator.Init(-1); Update(); return;
             }
             e.Handled = false;
+        }
+
+        private void Revolute(int numDays)
+        {
+            simulator.Revolute(numDays);
+            Update();
+        }
+
+        private void ViewMode6()
+        {
+            if (WFUtils.IsCtrlDown())
+            {
+                scene.ActivateCamera(1);
+                scene.Camera.Position = new Point3D(8, -12, 2);
+                scene.Camera.LookAtOrigin();
+            }
+
+            ViewMode = 6;
         }
 
         private void StartViewModeTransition()
