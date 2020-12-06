@@ -26,13 +26,13 @@
       <Button Content="Demo" Click="OnButtonDemo" Width="45" Margin="6,0,0,0"/>
       <ComboBox SelectedIndex="{Binding ViewMode}" Margin="16,0,0,0" Width="140">
         <ComboBoxItem Content="Fix: Overview 1"/>
-        <ComboBoxItem Content="Fix: Earth Eclip.Pole"/>
+        <ComboBoxItem Content="Fix: Overview 2"/>
         <ComboBoxItem Content="Fix: Earth North Pole"/>
         <ComboBoxItem Content="Fix: Earth Location"/>
         <ComboBoxItem Content="Fix: Earth Antipodal"/>
         <ComboBoxItem Content="Free: From Location"/>
-        <ComboBoxItem Content="Free: Overview 2"/>
         <ComboBoxItem Content="Free: Overview 3"/>
+        <ComboBoxItem Content="Free: Overview 4"/>
         <ComboBoxItem Content="Freeze"/>
       </ComboBox>
       <Label Content="Eccentricity"/>

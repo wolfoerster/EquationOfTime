@@ -28,7 +28,7 @@ namespace EquationOfTime
 {
     public enum ViewModes
     {
-        FixOverview, FixEclipitcPole, FixNorthPole, FixLocation, FixEarth, FreeLocation, FreeOverview2, FreeOverview3, Freeze
+        FixOverview, FixOverview2, FixNorthPole, FixLocation, FixEarth, FreeLocation, FreeOverview3, FreeOverview4, Freeze
     }
 
     public partial class SimulatorView : UserControl, INotifyPropertyChanged
@@ -58,6 +58,8 @@ namespace EquationOfTime
             EccentricityIndex = 1;
             ShowMeridian = true;
             ShowEcliptic = true;
+            ShowLaser = true;
+            ViewMode = 1;
 
             timer.Tick += TimerTick;
             timer.Interval = TimeSpan.FromMilliseconds(30);
@@ -393,10 +395,23 @@ namespace EquationOfTime
                     scene.Camera.LookAtOrigin();
                     break;
 
-                case ViewModes.FixEclipitcPole:
+                case ViewModes.FixOverview2:
+#if false
                     scene.Camera.Position = earth.Position + 13 * Math3D.UnitZ;
                     scene.Camera.LookDirection = -Math3D.UnitZ;
                     scene.Camera.UpDirection = Math3D.UnitY;
+#else
+                    {
+                        var polePosition = earth.TranslatePoint(new Point3D(0, 0, 1));
+                        var v = polePosition - earth.Position;
+
+                        scene.Camera.Position = (Point3D)(17 * v);
+                        scene.Camera.LookDirection = -v;
+
+                        var q = Math3D.Rotation(v, 20);
+                        scene.Camera.UpDirection = q.Transform(Math3D.UnitY);
+                    }
+#endif
                     break;
 
                 case ViewModes.FixNorthPole:
@@ -449,11 +464,11 @@ namespace EquationOfTime
                     scene.Camera.LookAtOrigin();
                     break;
 
-                case ViewModes.FreeOverview2:
+                case ViewModes.FreeOverview3:
                     scene.ActivateCamera(1);
                     break;
 
-                case ViewModes.FreeOverview3:
+                case ViewModes.FreeOverview4:
                     scene.ActivateCamera(2);
                     break;
 
@@ -542,7 +557,7 @@ namespace EquationOfTime
         private void StartViewModeTransition()
         {
             //if (IsViewModeChanging())
-                return;
+            return;
 
             if (transitionTimer == null)
             {
@@ -946,7 +961,7 @@ namespace EquationOfTime
         }
         int eccentricityIndex;
 
-#region Demo Mode
+        #region Demo Mode
 
         void OnButtonDemo(object sender, RoutedEventArgs e)
         {
@@ -1038,7 +1053,7 @@ namespace EquationOfTime
                     StartDay = 20;
                     StartMonth = 3;
                     Speed = 16;
-                    ViewMode = (int)ViewModes.FreeOverview2;
+                    ViewMode = (int)ViewModes.FreeOverview3;
                     ShowAxes = true;
                     ShowTexture = false;
                     ShowEcliptic = true;
@@ -1052,7 +1067,7 @@ namespace EquationOfTime
                     return;
 
                 case 7:
-                    ViewMode = (int)ViewModes.FreeOverview2;
+                    ViewMode = (int)ViewModes.FreeOverview3;
                     return;
 
                 case 8:
@@ -1207,6 +1222,6 @@ namespace EquationOfTime
             }
         }
 
-#endregion Demo Mode
+        #endregion Demo Mode
     }
 }
