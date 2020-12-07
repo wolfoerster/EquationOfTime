@@ -5,6 +5,7 @@
              xmlns:local="clr-namespace:EquationOfTime">
   <UserControl.Resources>
     <ImageBrush x:Key="earth" ImageSource="earth.jpg"/>
+    <ImageBrush x:Key="texture" ImageSource="texture.bmp"/>
   </UserControl.Resources>
   <Grid Grid.Column="1">
     <Grid.Resources>

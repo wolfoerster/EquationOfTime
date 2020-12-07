@@ -343,8 +343,20 @@ namespace EquationOfTime
                 return;
 
             xyPlane = new Disk(128) { Radius = 6 };
-            Brush brush = Brushes.Green.Clone();
+            var brush = (ImageBrush)Resources["texture"];
+#if false
+            var bitmapSource = brush.ImageSource as BitmapSource;
+            var imageWidth = bitmapSource.PixelWidth;
+            var imageHeight = bitmapSource.PixelHeight;
+
+            brush.Viewport = new Rect(0, 0, imageWidth, imageHeight);
+            brush.ViewportUnits = BrushMappingMode.Absolute;
+#else
+            brush.Viewport = new Rect(0, 0, 0.02, 0.02);
+#endif
+            brush.TileMode = TileMode.Tile;
             brush.Opacity = 0.12;
+
             xyPlane.DiffuseMaterial.Brush = brush;
             xyPlane.EmissiveMaterial.Brush = brush;
             xyPlane.SpecularMaterial.Brush = null;
@@ -402,14 +414,9 @@ namespace EquationOfTime
                     scene.Camera.UpDirection = Math3D.UnitY;
 #else
                     {
-                        var polePosition = earth.TranslatePoint(new Point3D(0, 0, 1));
-                        var v = polePosition - earth.Position;
-
-                        scene.Camera.Position = (Point3D)(17 * v);
-                        scene.Camera.LookDirection = -v;
-
-                        var q = Math3D.Rotation(v, 20);
-                        scene.Camera.UpDirection = q.Transform(Math3D.UnitY);
+                        var pt = earth.TranslatePoint(new Point3D(0, 0, 15));
+                        scene.Camera.Position = (Point3D)(pt - earth.Position);
+                        scene.Camera.LookAtSun();
                     }
 #endif
                     break;
@@ -961,7 +968,7 @@ namespace EquationOfTime
         }
         int eccentricityIndex;
 
-        #region Demo Mode
+#region Demo Mode
 
         void OnButtonDemo(object sender, RoutedEventArgs e)
         {
@@ -1222,6 +1229,6 @@ namespace EquationOfTime
             }
         }
 
-        #endregion Demo Mode
+#endregion Demo Mode
     }
 }
