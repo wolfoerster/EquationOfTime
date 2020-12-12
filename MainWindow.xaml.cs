@@ -73,12 +73,15 @@ namespace EquationOfTime
 
         void MeClosing(object sender, CancelEventArgs e)
         {
+            Properties.Settings.Default.WindowState = (int)WindowState;
+            if (WindowState == WindowState.Maximized)
+                WindowState = WindowState.Normal;
+
             (Content as SimulatorView).Stop();
             Properties.Settings.Default.Top = Top;
             Properties.Settings.Default.Left = Left;
             Properties.Settings.Default.Width = Width;
             Properties.Settings.Default.Height = Height;
-            Properties.Settings.Default.WindowState = (int)WindowState;
             Properties.Settings.Default.ScreenName = WFUtils.GetScreenByPixel(Left, Top).Name;
             Properties.Settings.Default.Save();
         }
