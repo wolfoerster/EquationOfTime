@@ -52,14 +52,16 @@ namespace EquationOfTime
             Background = null;
             InitScene();
 
-            simulator.Init(0);
-            Speed = 9;
-            Obliquity = 0;
-            EccentricityIndex = 1;
-            ShowMeridian = true;
+            simulator.Init(32);
+            Speed = 14;
+            //Obliquity = 0;
+            //EccentricityIndex = 1;
+            //ShowMeridian = true;
             ShowEcliptic = true;
-            ShowLaser = true;
-            ViewMode = 1;
+            //ShowLaser = true;
+            ShowTexture = false;
+            ShowLocation = false;
+            ViewMode = 6;
 
             timer.Tick += TimerTick;
             timer.Interval = TimeSpan.FromMilliseconds(30);
@@ -355,7 +357,7 @@ namespace EquationOfTime
             brush.Viewport = new Rect(0, 0, 0.02, 0.02);
 #endif
             brush.TileMode = TileMode.Tile;
-            brush.Opacity = 0.12;
+            brush.Opacity = 0.05;
 
             xyPlane.DiffuseMaterial.Brush = brush;
             xyPlane.EmissiveMaterial.Brush = brush;
