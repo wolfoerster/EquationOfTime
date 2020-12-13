@@ -52,16 +52,16 @@ namespace EquationOfTime
             Background = null;
             InitScene();
 
-            simulator.Init(0);
+            simulator.Init(32);
             Speed = 9;
-            Obliquity = 0;
+            //Obliquity = 60;
             EccentricityIndex = 1;
             ShowMeridian = true;
             ShowEcliptic = true;
             ShowLaser = false;
             ShowTexture = true;
             ShowLocation = true;
-            ViewMode = 0;
+            ViewMode = 1;
 
             timer.Tick += TimerTick;
             timer.Interval = TimeSpan.FromMilliseconds(30);
