@@ -519,8 +519,17 @@ namespace EquationOfTime
                 case Key.Divide: Speed /= 2; return;
                 case Key.Back: simulator.InvertTime(); return;
                 case Key.D: simulator.DemoMode = !simulator.DemoMode; return;
+                case Key.NumPad1: Revolute(+1); return;
+                case Key.NumPad2: OnButtonNoon(null, null); return;
+                case Key.NumPad3: Revolute(-1); return;
             }
             e.Handled = false;
+        }
+
+        private void Revolute(int numDays)
+        {
+            simulator.Revolute(numDays);
+            Update();
         }
 
         void OnButtonInvert(object sender, RoutedEventArgs e)

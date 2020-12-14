@@ -50,6 +50,11 @@ namespace EquationOfTime
     public class Simulator
     {
         /// <summary>
+        /// A sidereal day in seconds.
+        /// </summary>
+        static double SiderealDay = MathUtils.ToSeconds(0, 23, 56, 4.1);
+
+        /// <summary>
         /// Angle between the ecliptic and the celestial equator.
         /// </summary>
         public double Obliquity = 23.44;
@@ -67,7 +72,7 @@ namespace EquationOfTime
         /// <summary>
         /// Angular velocity of the earth rotating around itself.
         /// </summary>
-        double wEarth = MathUtils.PIx2 / MathUtils.ToSeconds(0, 23, 56, 4.1); //--- sidereal day
+        double wEarth = MathUtils.PIx2 / SiderealDay;
 
         /// <summary>
         /// Mean angular velocity of the earth orbiting the sun.
@@ -138,6 +143,12 @@ namespace EquationOfTime
             time = (new DateTime(2014, month, day) - refTime).TotalSeconds;
             time -= demoMode ? 200 : 1800; //--- correct to something before midnight
             phase = Phases.ForeMidnight;
+            Update();
+        }
+
+        public void Revolute(int numDays)
+        {
+            time += numDays * SiderealDay;
             Update();
         }
 
