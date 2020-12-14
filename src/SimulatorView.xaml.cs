@@ -62,7 +62,7 @@ namespace EquationOfTime
         Simulator simulator = new Simulator();
         DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.Render);
         Brush defBrush = new SolidColorBrush(Color.FromRgb(64, 64, 32));
-        Cylinder latitude, meridian, shadowBorder;
+        Cylinder latitude, meridian, shadowBorder, laser;
         Sphere earth, location;
         Disk horizon, xyPlane;
         Object3D axes;
@@ -255,6 +255,24 @@ namespace EquationOfTime
                     sphere.EmissiveMaterial.Brush = location.EmissiveMaterial.Brush;
                 }
             }
+        }
+
+        void InitLaser()
+        {
+            if (laser != null)
+            {
+                earth.Children.Remove(laser);
+                laser = null;
+            }
+
+            if (!showLaser)
+                return;
+
+            laser = new Cylinder();
+            laser.To = new Point3D(3.3, 0, 0);
+            laser.Radius = 0.02;
+            laser.DiffuseMaterial.Brush = laser.EmissiveMaterial.Brush = Brushes.MidnightBlue;
+            earth.Children.Add(laser);
         }
 
         void InitMeridian()
@@ -678,6 +696,21 @@ namespace EquationOfTime
         }
         bool showMeridian;
 
+        public bool ShowLaser
+        {
+            get { return showLaser; }
+            set
+            {
+                if (showLaser != value)
+                {
+                    showLaser = value;
+                    InitLaser();
+                    FirePropertyChanged("ShowLaser");
+                }
+            }
+        }
+        bool showLaser;
+
         public bool ShowEcliptic
         {
             get { return showEcliptic; }
@@ -903,6 +936,7 @@ namespace EquationOfTime
                     ShowAxes = true;
                     ShowTexture = false;
                     ShowEcliptic = true;
+                    ShowLaser = false;
                     ShowMeridian = false;
                     ShowLocation = false;
                     ShowShadowBorder = false;
@@ -1011,6 +1045,7 @@ namespace EquationOfTime
                     scene.Camera.Position = new Point3D(0, 0, 12);
                     scene.Camera.LookAtOrigin();
                     scene.Camera.UpDirection = Math3D.UnitY;
+                    ShowLaser = false;
                     ShowMeridian = true;
                     ShowEcliptic = false;
                     Start();
@@ -1020,6 +1055,7 @@ namespace EquationOfTime
                     Speed = 10;
                     Obliquity = 0;
                     ViewMode = (int)ViewModes.FixNorthPole;
+                    ShowLaser = true;
                     ShowEcliptic = true;
                     return;
 
@@ -1041,6 +1077,7 @@ namespace EquationOfTime
                     Speed = 12;
                     Obliquity = 60;
                     ViewMode = (int)ViewModes.FixNorthPole;
+                    ShowLaser = true;
                     ShowEcliptic = true;
                     return;
 
@@ -1050,6 +1087,7 @@ namespace EquationOfTime
                     StartDay = 9;
                     StartMonth = 12;
                     ViewMode = (int)ViewModes.FixOverview;
+                    ShowLaser = false;
                     ShowEcliptic = false;
                     Start();
                     return;

@@ -61,6 +61,8 @@
       <CheckBox IsChecked="{Binding ShowHorizon}"/>
       <Label Content="Meridian"/>
       <CheckBox IsChecked="{Binding ShowMeridian}"/>
+      <Label Content="Laser"/>
+      <CheckBox IsChecked="{Binding ShowLaser}"/>
       <Label Content="Shadowborder"/>
       <CheckBox IsChecked="{Binding ShowShadowBorder}"/>
     </wft3d:StackPanelH>
