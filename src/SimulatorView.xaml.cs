@@ -104,7 +104,7 @@ namespace EquationOfTime
         {
             if (axes != null)
             {
-                scene.Models.Children.Remove(axes);
+                scene.Models.Remove(axes);
                 axes = null;
             }
 
@@ -115,7 +115,7 @@ namespace EquationOfTime
             InitAxis(Math3D.UnitX, Brushes.DarkRed);
             InitAxis(Math3D.UnitY, Brushes.DarkGreen);
             InitAxis(Math3D.UnitZ, Brushes.Blue);
-            scene.Models.Children.Add(axes);
+            scene.Models.Add(axes);
         }
 
         void InitAxis(Vector3D v, Brush brush)
@@ -141,7 +141,7 @@ namespace EquationOfTime
             Sphere sun = new Sphere { Radius = 0.15 };
             sun.DiffuseMaterial.Brush = Brushes.Gold;
             sun.EmissiveMaterial.Brush = Brushes.Gold;
-            scene.Models.Children.Add(sun);
+            scene.Models.Add(sun);
         }
 
         void InitEarth()
@@ -149,7 +149,7 @@ namespace EquationOfTime
             earth = new Sphere(64);
             earth.DiffuseMaterial.Brush = (ImageBrush)Resources["earth"];
             earth.SpecularMaterial.Brush = Brushes.Black;
-            scene.Models.Children.Add(earth);
+            scene.Models.Add(earth);
         }
 
         void InitLocation()
@@ -314,7 +314,7 @@ namespace EquationOfTime
         {
             if (shadowBorder != null)
             {
-                scene.Models.Children.Remove(shadowBorder);
+                scene.Models.Remove(shadowBorder);
                 shadowBorder = null;
             }
 
@@ -322,14 +322,14 @@ namespace EquationOfTime
                 return;
 
             shadowBorder = CreateDisk(Math3D.RotationY(90));
-            scene.Models.Children.Add(shadowBorder);
+            scene.Models.Add(shadowBorder);
         }
 
         void InitEcliptic()
         {
             if (xyPlane != null)
             {
-                scene.Models.Children.Remove(xyPlane);
+                scene.Models.Remove(xyPlane);
                 xyPlane = null;
             }
 
@@ -347,7 +347,7 @@ namespace EquationOfTime
             xyPlane.EmissiveMaterial.Brush = brush;
             xyPlane.SpecularMaterial.Brush = null;
             xyPlane.BackMaterial = xyPlane.Material;
-            scene.Models.Children.Add(xyPlane);
+            scene.Models.Add(xyPlane);
         }
 
         void Update()
@@ -401,7 +401,7 @@ namespace EquationOfTime
                     {
                         var pt = earth.TranslatePoint(new Point3D(0, 0, 15));
                         scene.Camera.Position = (Point3D)(pt - earth.Position);
-                        scene.Camera.LookAtSun();
+                        scene.Camera.LookAtOrigin();
                     }
 #endif
                     break;
